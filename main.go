@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"encoding/csv"
+	"flag"
 	"fmt"
-	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -12,6 +12,8 @@ import (
 
 	routev1 "github.com/openshift/api/route/v1"
 	routeclientv1 "github.com/openshift/client-go/route/clientset/versioned/typed/route/v1"
+	log "github.com/sirupsen/logrus"
+	"golang.org/x/exp/slices"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -27,6 +29,11 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 )
 
+func init() {
+	// Only log the warning severity or above.
+	log.SetLevel(log.WarnLevel)
+}
+
 type ClusterData struct {
 	Namespaces          map[string]corev1.Namespace
 	Pods                []corev1.Pod
@@ -36,20 +43,54 @@ type ClusterData struct {
 }
 
 type Component struct {
-	Name              string
-	Namespace         string
-	Group             string
-	DeployedAs        string
-	RunsOn            string
-	SCC               string
-	RunLevel          string
-	HostNetwork       bool
-	InboundTraffic    bool
-	ExternallyExposed bool
-	HostMounts        []string
-	Pods              []corev1.Pod
-	Services          []corev1.Service
-	Routes            []routev1.Route
+	Name                string
+	Namespace           string
+	Group               string
+	DeployedAs          string
+	RunsOn              string
+	SCC                 string
+	RunLevel            string
+	HostNetwork         bool
+	InboundTraffic      bool
+	ExternallyExposed   bool
+	IncomingConnections []string
+	OutgoingConnections []string
+	HostMounts          []string
+	Pods                []corev1.Pod
+	Services            []corev1.Service
+	Routes              []routev1.Route
+}
+
+type FlowData struct {
+	DstK8S_OwnerName string
+	FlowDirection    string
+	SrcK8S_Namespace string
+	SrcK8S_OwnerName string
+	App              string
+	DstK8S_Namespace string
+	AgentIP          string
+	DstPort          string
+	Etype            string
+	SrcMac           string
+	Proto            string
+	Bytes            string
+	DstK8S_Name      string
+	DstK8S_OwnerType string
+	SrcK8S_Type      string
+	DstAddr          string
+	Duplicate        string
+	DstMac           string
+	SrcK8S_OwnerType string
+	DstK8S_Type      string
+	Packets          string
+	SrcPort          string
+	DstK8S_HostName  string
+	Interface        string
+	Flags            string
+	IfDirection      string
+	DstK8S_HostIP    string
+	SrcAddr          string
+	SrcK8S_Name      string
 }
 
 // XXX this is super inefficient, lazy. Maybe should invert the map.
@@ -70,8 +111,26 @@ func printValues(writer *csv.Writer, values []string) {
 	}
 }
 
+func (c Component) Key() string {
+	return strings.Join([]string{c.Group, c.Namespace, c.DeployedAs, c.Name}, "/")
+}
+
 func (c Component) Values() []string {
-	return []string{c.Group, c.Namespace, c.Name, c.DeployedAs, c.RunsOn, c.SCC, c.RunLevel, strconv.FormatBool(c.HostNetwork), strconv.FormatBool(c.InboundTraffic), strconv.FormatBool(c.ExternallyExposed), strings.Join(c.HostMounts, ",")}
+	return []string{
+		c.Group,
+		c.Namespace,
+		c.Name,
+		c.DeployedAs,
+		c.RunsOn,
+		c.SCC,
+		c.RunLevel,
+		strconv.FormatBool(c.HostNetwork),
+		strconv.FormatBool(c.InboundTraffic),
+		strconv.FormatBool(c.ExternallyExposed),
+		strings.Join(c.HostMounts, ","),
+		strings.Join(c.IncomingConnections, ","),
+		strings.Join(c.OutgoingConnections, ","),
+	}
 }
 
 // func (c Component) String() string {
@@ -266,9 +325,43 @@ func getClusterData() ClusterData {
 	}
 }
 
+func getComponentKey(namespace string, ownerType string, ownerName string) string {
+	if ownerType == "ConfigMap" {
+		ownerType = "StaticPods"
+		// heuristic based transformation for static pods
+		if strings.HasPrefix(ownerName, "revision-status") {
+			ownerName = namespace
+		}
+	}
+
+	group := getGroup(strings.TrimPrefix(namespace, "openshift-"))
+	componentKey := strings.Join([]string{group, namespace, ownerType, ownerName}, "/")
+
+	// XXX special case
+	if componentKey == "other/default/Service/kubernetes" {
+		componentKey = "kube/kube-apiserver/StaticPods/kube-apiserver"
+	}
+
+	return componentKey
+}
+
 func main() {
+	log.SetLevel(log.DebugLevel)
+
+	networkCSV := flag.String("network-csv", "", "Path to the CSV file")
+	exclude := flag.String("exclude", "", "list of groups to exclude (comma separated)")
+	flag.Parse()
+
+	// if *networkCSV == "" {
+	// 	fmt.Println("Usage:", os.Args[0], "--network-csv <filename.csv>")
+	// 	os.Exit(1)
+	// }
+
+	excludedGroups := strings.Split(*exclude, ",")
+
 	clusterData := getClusterData()
 
+	serviceToComponent := make(map[string]string)
 	components := make(map[string]Component)
 	for _, p := range clusterData.Pods {
 		if appLabel, ok := p.Labels["app"]; ok && appLabel == "guard" {
@@ -300,8 +393,13 @@ func main() {
 			ownerKey = fmt.Sprintf("%s/%s", ownerKind, ownerName)
 		}
 
-		namespace := p.GetNamespace()
+		namespace := strings.TrimPrefix(p.GetNamespace(), "openshift-")
 		group := getGroup(strings.TrimPrefix(namespace, "openshift-"))
+		if slices.Contains(excludedGroups, group) {
+			log.Debugf("Skipping %s due to exclusions", ownerKey)
+			continue
+		}
+
 		componentKey := fmt.Sprintf("%s/%s/%s", group, namespace, ownerKey)
 		hostMounts := getHostMounts(p)
 		runLevel := clusterData.Namespaces[p.Namespace].Labels["openshift.io/run-level"]
@@ -327,6 +425,9 @@ func main() {
 		runsOn := getDeployedNodes(p, ownerKind)
 		scc := getSCC(p)
 		podServices := getServices(p, clusterData.ServicesByNamespace)
+		for _, s := range podServices {
+			serviceToComponent[fmt.Sprintf("%s/%s/Service/%s", group, namespace, s.Name)] = componentKey
+		}
 
 		// TODO update component
 		c.RunsOn = runsOn
@@ -351,7 +452,16 @@ func main() {
 		components[componentKey] = c
 	}
 
-	printResults(components, len(clusterData.Pods))
+	if *networkCSV != "" {
+		flowData := getNetworkTraffic(networkCSV)
+		components = addNetworkDataToComponents(components, serviceToComponent, flowData)
+	} else {
+		log.Warn("Can't generate a threat model diagram without network data")
+	}
+
+	// printResults(components, len(clusterData.Pods))
+
+	generateThreatModel(components, "output.json", excludedGroups)
 }
 
 func printResults(components map[string]Component, numPods int) {
@@ -365,7 +475,7 @@ func printResults(components map[string]Component, numPods int) {
 	sort.Strings(keys)
 
 	var c Component
-	printValues(writer, []string{"Group", "Namespace", "Name", "DeployedAs", "RunsOn", "SCC", "RunLevel", "HostNetwork", "InboundTraffic?", "ExternallyExposed?", "HostMounts"})
+	printValues(writer, []string{"Group", "Namespace", "Name", "DeployedAs", "RunsOn", "SCC", "RunLevel", "HostNetwork", "InboundTraffic?", "ExternallyExposed?", "HostMounts", "IncomingConnections", "OutgoingConnections"})
 	for _, k := range keys {
 		c = components[k]
 		printValues(writer, c.Values())
@@ -373,5 +483,5 @@ func printResults(components map[string]Component, numPods int) {
 
 	writer.Flush()
 
-	fmt.Printf("\nThere are %d pods\n", numPods)
+	// fmt.Printf("\nThere are %d pods\n", numPods)
 }
