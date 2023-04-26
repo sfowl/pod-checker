@@ -459,12 +459,12 @@ func main() {
 		log.Warn("Can't generate a threat model diagram without network data")
 	}
 
-	// printResults(components, len(clusterData.Pods))
+	printCSV(components, len(clusterData.Pods))
 
 	generateThreatModel(components, "output.json", excludedGroups)
 }
 
-func printResults(components map[string]Component, numPods int) {
+func printCSV(components map[string]Component, numPods int) {
 	writer := csv.NewWriter(os.Stdout)
 	writer.Comma = '\t'
 

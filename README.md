@@ -12,7 +12,9 @@ $ go run . -network-csv ./examples/network-traffic.csv -exclude observability,OL
 
 A network-traffic.csv file is a CSV of network traffic data, exported by the [network observability operator](https://docs.openshift.com/container-platform/4.12/networking/network_observability/network-observability-overview.html). Network traffic data like this is necessary to create the links between components in the final report data.
 
-This will create an threatdragon file name `output.json`, which can be imported in a [Threat Dragon](https://github.com/OWASP/threat-dragon) instance.
+This will:
+* print detailed component data in csv form to stdout
+* create a threatdragon file `output.json`, which can be imported in a [Threat Dragon](https://github.com/OWASP/threat-dragon) instance.
 
 ## TODO
 
