@@ -4,6 +4,8 @@ Reads openshift/kubernetes cluster data, to automatically produce security repor
 
 ## Usage
 
+### Gather data
+
 Log in to an OpenShift cluster or set the KUBECONFIG env variable, then:
 
 ```
@@ -16,9 +18,18 @@ This will:
 * print detailed component data in csv form to stdout
 * create a threatdragon file `output.json`, which can be imported in a [Threat Dragon](https://github.com/OWASP/threat-dragon) instance.
 
+### Threagile
+
+Using the data harvested in the previous step, produce threagile reports:
+
+```
+$ podman run --user root --rm -it -v ./example:/app/work:Z threagile  -model /app/work/output/threagile_input.yaml -output /app/work/output/threagile
+```
+
+This will produce a variety of threagile outputs in the `example/output/threagile` directory.
+
 ## TODO
 
-* integrate with [threagile](https://github.com/Threagile/threagile)
 * augment data with user supplied component info (e.g. in yaml format)
   - qualitative data (e.g. from survey)
   - data not retrievable from API (e.g. systemd services like kubelet, cri-o, sshd)
@@ -31,4 +42,10 @@ This will:
 
 ## Examples
 
-![screenshot](/example/screenshot.png)
+Threat Dragon output diagram:
+
+![screenshot](/example/screenshot_threatdragon.png)
+
+Threagile report pdf:
+
+![pdf](/example/screenshot_threagile.png)

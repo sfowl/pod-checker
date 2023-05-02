@@ -442,12 +442,12 @@ func main() {
 
 	// components := filterComponents(components, excludedGroups)
 
-	printCSV(components)
+	// printCSV(components)
 	// fmt.Printf("\nThere are %d pods\n", numPods)
 
 	threagileReport := genThreagile(components)
 	threagileYAML := marshalYAML(threagileReport)
-	writeYAML(threagileYAML, "example/output/threagile.yaml")
+	writeYAML(threagileYAML, "example/output/threagile_input.yaml")
 
 	componentYAML := marshalYAML(components)
 	writeYAML(componentYAML, "example/output/components.yaml")
