@@ -1,0 +1,2050 @@
+auth/authentication-operator/Deployment/authentication-operator:
+  name: authentication-operator
+  namespace: authentication-operator
+  group: auth
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: 0
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c15,c10
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - MKNOD
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: anyuid
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-scheduler/StaticPods/kube-scheduler
+  - networking/dns/DaemonSet/dns-default
+  - auth/authentication/Deployment/oauth-openshift
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - kube/kube-scheduler/StaticPods/kube-scheduler
+  - auth/authentication/Deployment/oauth-openshift
+  hostMounts: []
+auth/authentication/Deployment/oauth-openshift:
+  name: oauth-openshift
+  namespace: authentication
+  group: auth
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: 0
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: true
+  incomingConnections:
+  - networking/ingress/Deployment/router-default
+  - auth/authentication-operator/Deployment/authentication-operator
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - networking/ingress/Deployment/router-default
+  - auth/authentication-operator/Deployment/authentication-operator
+  hostMounts: []
+auth/oauth-apiserver/Deployment/apiserver:
+  name: apiserver
+  namespace: oauth-apiserver
+  group: auth
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: 0
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+console/console-operator/Deployment/console-operator:
+  name: console-operator
+  namespace: console-operator
+  group: console
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000650000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000650000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c26,c0
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  hostMounts: []
+console/console/Deployment/console:
+  name: console
+  namespace: console
+  group: console
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000640000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000640000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c25,c20
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: true
+  incomingConnections:
+  - networking/ingress/Deployment/router-default
+  - networking/dns/DaemonSet/dns-default
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - networking/ingress/Deployment/router-default
+  hostMounts:
+  - /etc/pki/ca-trust/extracted/pem
+console/console/Deployment/downloads:
+  name: downloads
+  namespace: console
+  group: console
+  deployedAs: Deployment
+  runsOn: worker nodes
+  securityContext:
+    fsGroup: 1000640000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000640000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c25,c20
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: true
+  incomingConnections:
+  - networking/ingress/Deployment/router-default
+  outgoingConnections:
+  - networking/ingress/Deployment/router-default
+  hostMounts: []
+kube/etcd-operator/Deployment/etcd-operator:
+  name: etcd-operator
+  namespace: etcd-operator
+  group: kube
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/dns/DaemonSet/dns-default
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+kube/etcd/StaticPods/etcd:
+  name: etcd
+  namespace: etcd
+  group: kube
+  deployedAs: StaticPods
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/kubernetes/manifests
+  - /etc/kubernetes/static-pod-resources
+  - /etc/kubernetes/static-pod-certs
+kube/kube-apiserver-operator/Deployment/kube-apiserver-operator:
+  name: kube-apiserver-operator
+  namespace: kube-apiserver-operator
+  group: kube
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - machine management/machine-api/Service/machine-api-operator-webhook
+  - machine management/machine-api/Deployment/machine-api-controllers
+  - machine management/machine-api/Deployment/cluster-autoscaler-operator
+  - networking/dns/DaemonSet/dns-default
+  - console/console-operator/Deployment/console-operator
+  - storage/cluster-storage-operator/Deployment/csi-snapshot-webhook
+  - machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-operator
+  - other/cloud-credential-operator/Deployment/pod-identity-webhook
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - machine management/machine-api/Deployment/machine-api-controllers
+  - console/console-operator/Deployment/console-operator
+  - storage/cluster-storage-operator/Deployment/csi-snapshot-webhook
+  - other/cloud-credential-operator/Deployment/pod-identity-webhook
+  hostMounts: []
+kube/kube-apiserver/StaticPods/kube-apiserver:
+  name: kube-apiserver
+  namespace: kube-apiserver
+  group: kube
+  deployedAs: StaticPods
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/ingress/Deployment/router-default
+  outgoingConnections:
+  - other/service-ca-operator/Deployment/service-ca-operator
+  - other/service-ca/Deployment/service-ca
+  - networking/route-controller-manager/Deployment/route-controller-manager
+  - auth/oauth-apiserver/Deployment/apiserver
+  - networking/network-diagnostics/Deployment/network-check-source
+  - networking/multus/DaemonSet/network-metrics-daemon
+  - networking/multus/Deployment/multus-admission-controller
+  - machine management/machine-config-operator/Deployment/machine-config-operator
+  - machine management/machine-config-operator/Deployment/machine-config-controller
+  - machine management/machine-api/Deployment/machine-api-operator
+  - machine management/machine-api/Deployment/machine-api-controllers
+  - machine management/machine-api/Deployment/control-plane-machine-set-operator
+  - machine management/machine-api/Deployment/cluster-autoscaler-operator
+  - storage/kube-storage-version-migrator-operator/Deployment/kube-storage-version-migrator-operator
+  - kube/kube-scheduler-operator/Deployment/openshift-kube-scheduler-operator
+  - kube/kube-scheduler/StaticPods/kube-scheduler
+  - kube/kube-controller-manager-operator/Deployment/kube-controller-manager-operator
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  - networking/ingress-operator/Deployment/ingress-operator
+  - networking/ingress/Deployment/router-default
+  - other/image-registry/Deployment/image-registry
+  - other/image-registry/Deployment/cluster-image-registry-operator
+  - kube/etcd-operator/Deployment/etcd-operator
+  - kube/etcd/StaticPods/etcd
+  - networking/dns-operator/Deployment/dns-operator
+  - networking/dns/DaemonSet/dns-default
+  - openshift/controller-manager-operator/Deployment/openshift-controller-manager-operator
+  - openshift/controller-manager/Deployment/controller-manager
+  - console/console-operator/Deployment/console-operator
+  - console/console/Deployment/console
+  - storage/cluster-storage-operator/Deployment/csi-snapshot-webhook
+  - storage/cluster-storage-operator/Deployment/csi-snapshot-controller-operator
+  - storage/cluster-storage-operator/Deployment/cluster-storage-operator
+  - other/cluster-samples-operator/Deployment/cluster-samples-operator
+  - machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-operator
+  - other/cluster-csi-drivers/Deployment/aws-ebs-csi-driver-operator
+  - other/cluster-csi-drivers/Deployment/aws-ebs-csi-driver-controller
+  - other/cloud-credential-operator/Deployment/cloud-credential-operator
+  - auth/authentication-operator/Deployment/authentication-operator
+  - auth/authentication/Deployment/oauth-openshift
+  - openshift/apiserver-operator/Deployment/openshift-apiserver-operator
+  - openshift/apiserver/Deployment/apiserver
+  hostMounts:
+  - /etc/kubernetes/static-pod-resources
+  - /etc/kubernetes/static-pod-certs
+kube/kube-controller-manager-operator/Deployment/kube-controller-manager-operator:
+  name: kube-controller-manager-operator
+  namespace: kube-controller-manager-operator
+  group: kube
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+kube/kube-controller-manager/StaticPods/kube-controller-manager:
+  name: kube-controller-manager
+  namespace: kube-controller-manager
+  group: kube
+  deployedAs: StaticPods
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/kubernetes/static-pod-resources
+  - /etc/kubernetes/static-pod-certs
+kube/kube-scheduler-operator/Deployment/openshift-kube-scheduler-operator:
+  name: openshift-kube-scheduler-operator
+  namespace: kube-scheduler-operator
+  group: kube
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+kube/kube-scheduler/StaticPods/kube-scheduler:
+  name: kube-scheduler
+  namespace: kube-scheduler
+  group: kube
+  deployedAs: StaticPods
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  - auth/authentication-operator/Deployment/authentication-operator
+  outgoingConnections:
+  - networking/ingress/Deployment/router-default
+  - auth/authentication-operator/Deployment/authentication-operator
+  hostMounts:
+  - /etc/kubernetes/static-pod-resources
+  - /etc/kubernetes/static-pod-certs
+machine management/cluster-machine-approver/Deployment/machine-approver:
+  name: machine-approver
+  namespace: cluster-machine-approver
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/kube-rbac-proxy
+  - /etc/tls/private
+machine management/cluster-node-tuning-operator/DaemonSet/tuned:
+  name: tuned
+  namespace: cluster-node-tuning-operator
+  group: machine management
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/modprobe.d
+  - /etc/sysconfig
+  - /etc/sysctl.d
+  - /etc/sysctl.conf
+  - /etc/systemd
+  - /sys
+  - /run/systemd/system
+  - /lib/modules
+  - /host
+machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-operator:
+  name: cluster-node-tuning-operator
+  namespace: cluster-node-tuning-operator
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 499
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c17,c4
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - MKNOD
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: anyuid
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  hostMounts:
+  - /etc/secrets
+  - /apiserver.local.config/certificates
+machine management/machine-api/Deployment/cluster-autoscaler-operator:
+  name: cluster-autoscaler-operator
+  namespace: machine-api
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000470000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000470000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c22,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  hostMounts:
+  - /etc/kube-rbac-proxy
+  - /etc/tls/private
+  - /etc/cluster-autoscaler-operator/tls
+machine management/machine-api/Deployment/cluster-baremetal-operator:
+  name: cluster-baremetal-operator
+  namespace: machine-api
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 65534
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c22,c4
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - MKNOD
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: anyuid
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/cluster-baremetal-operator/tls
+  - /etc/cluster-baremetal-operator/images
+  - /etc/baremetal-kube-rbac-proxy
+  - /etc/tls/private
+machine management/machine-api/Deployment/control-plane-machine-set-operator:
+  name: control-plane-machine-set-operator
+  namespace: machine-api
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000470000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000470000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c22,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /tmp/k8s-webhook-server/serving-certs
+machine management/machine-api/Deployment/machine-api-operator:
+  name: machine-api-operator
+  namespace: machine-api
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000470000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000470000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c22,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/kube-rbac-proxy
+  - /etc/tls/private
+  - /etc/machine-api-operator-config/images
+machine management/machine-config-operator/DaemonSet/machine-config-daemon:
+  name: machine-config-daemon
+  namespace: machine-config-operator
+  group: machine management
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /rootfs
+  - /etc/tls/private
+  - /etc/tls/cookie-secret
+machine management/machine-config-operator/DaemonSet/machine-config-server:
+  name: machine-config-server
+  namespace: machine-config-operator
+  group: machine management
+  deployedAs: DaemonSet
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000300000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000300000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c17,c14
+    suppplementalGroups:
+    - 1000300000
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - KILL
+      - MKNOD
+      - SETGID
+      - SETUID
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: hostnetwork
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/ssl/mcs
+  - /etc/mcs/bootstrap-token
+machine management/machine-config-operator/Deployment/machine-config-controller:
+  name: machine-config-controller
+  namespace: machine-config-operator
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000300000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000300000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c17,c14
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/tls/private
+  - /etc/tls/cookie-secret
+machine management/machine-config-operator/Deployment/machine-config-operator:
+  name: machine-config-operator
+  namespace: machine-config-operator
+  group: machine management
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 65534
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c17,c14
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - MKNOD
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: hostmount-anyuid
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/ssl/kubernetes/ca.crt
+  - /etc/mco/images
+networking/dns-operator/Deployment/dns-operator:
+  name: dns-operator
+  namespace: dns-operator
+  group: networking
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/tls/private
+networking/dns/DaemonSet/dns-default:
+  name: dns-default
+  namespace: dns
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - networking/network-diagnostics/Deployment/network-check-source
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  - other/image-registry/Deployment/image-registry
+  - kube/etcd-operator/Deployment/etcd-operator
+  - openshift/controller-manager/Deployment/controller-manager
+  - console/console/Deployment/console
+  - auth/authentication-operator/Deployment/authentication-operator
+  hostMounts:
+  - /etc/coredns
+  - /etc/tls/private
+networking/dns/DaemonSet/node-resolver:
+  name: node-resolver
+  namespace: dns
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/hosts
+networking/ingress-canary/DaemonSet/ingress-canary:
+  name: ingress-canary
+  namespace: ingress-canary
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    fsGroup: 1000630000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000630000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c25,c15
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: true
+  incomingConnections:
+  - networking/ingress/Deployment/router-default
+  outgoingConnections:
+  - networking/ingress/Deployment/router-default
+  hostMounts: []
+networking/ingress-operator/Deployment/ingress-operator:
+  name: ingress-operator
+  namespace: ingress-operator
+  group: networking
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000130000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000130000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c11,c10
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/pki/ca-trust/extracted/pem
+  - /etc/tls/private
+networking/ingress/Deployment/router-default:
+  name: router-default
+  namespace: ingress
+  group: networking
+  deployedAs: Deployment
+  runsOn: worker nodes
+  securityContext:
+    fsGroup: 1000600000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000600000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c25,c0
+    suppplementalGroups:
+    - 1000600000
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - KILL
+      - MKNOD
+      - SETGID
+      - SETUID
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: true
+  scc: hostnetwork
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-scheduler/StaticPods/kube-scheduler
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  - networking/ingress-canary/DaemonSet/ingress-canary
+  - console/console/Deployment/downloads
+  - console/console/Deployment/console
+  - auth/authentication/Deployment/oauth-openshift
+  outgoingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  - networking/ingress-canary/DaemonSet/ingress-canary
+  - console/console/Deployment/downloads
+  - console/console/Deployment/console
+  - auth/authentication/Deployment/oauth-openshift
+  hostMounts:
+  - /etc/pki/tls/private
+  - /etc/pki/tls/metrics-certs
+networking/multus/DaemonSet/multus:
+  name: multus
+  namespace: multus
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /entrypoint
+  - /host/etc/os-release
+  - /host/etc/cni/net.d
+  - /host/var/run/multus/cni/net.d
+  - /host/opt/cni/bin
+networking/multus/DaemonSet/multus-additional-cni-plugins:
+  name: multus-additional-cni-plugins
+  namespace: multus
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts: []
+networking/multus/DaemonSet/network-metrics-daemon:
+  name: network-metrics-daemon
+  namespace: multus
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/metrics
+networking/multus/Deployment/multus-admission-controller:
+  name: multus-admission-controller
+  namespace: multus
+  group: networking
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/webhook
+networking/network-diagnostics/DaemonSet/network-check-target:
+  name: network-check-target
+  namespace: network-diagnostics
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    fsGroup: 1000510000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000510000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c2
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/network-diagnostics/Deployment/network-check-source
+  outgoingConnections:
+  - networking/network-diagnostics/Deployment/network-check-source
+  hostMounts: []
+networking/network-diagnostics/Deployment/network-check-source:
+  name: network-check-source
+  namespace: network-diagnostics
+  group: networking
+  deployedAs: Deployment
+  runsOn: worker nodes
+  securityContext:
+    fsGroup: 1000510000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000510000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c2
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/network-diagnostics/DaemonSet/network-check-target
+  - networking/dns/DaemonSet/dns-default
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - networking/network-diagnostics/DaemonSet/network-check-target
+  - openshift/apiserver/Deployment/apiserver
+  hostMounts: []
+networking/network-operator/Deployment/network-operator:
+  name: network-operator
+  namespace: network-operator
+  group: networking
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/kubernetes
+networking/route-controller-manager/Deployment/route-controller-manager:
+  name: route-controller-manager
+  namespace: route-controller-manager
+  group: networking
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000550000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000550000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c22
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+networking/sdn/DaemonSet/sdn:
+  name: sdn
+  namespace: sdn
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /config
+  - /config-mtu-migration
+  - /env
+  - /run/netns
+  - /host
+  - /host-cni-bin
+  - /etc/cni/net.d
+  - /lib/modules
+  - /etc/sysconfig
+  - /etc/pki/tls/metrics-certs
+networking/sdn/DaemonSet/sdn-controller:
+  name: sdn-controller
+  namespace: sdn
+  group: networking
+  deployedAs: DaemonSet
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /env
+  - /etc/pki/tls/metrics-certs
+openshift/apiserver-operator/Deployment/openshift-apiserver-operator:
+  name: openshift-apiserver-operator
+  namespace: apiserver-operator
+  group: openshift
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 65534
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c16,c5
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+openshift/apiserver/Deployment/apiserver:
+  name: apiserver
+  namespace: apiserver
+  group: openshift
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: 0
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/network-diagnostics/Deployment/network-check-source
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+openshift/controller-manager-operator/Deployment/openshift-controller-manager-operator:
+  name: openshift-controller-manager-operator
+  namespace: controller-manager-operator
+  group: openshift
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 65534
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c16,c15
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+openshift/controller-manager/Deployment/controller-manager:
+  name: controller-manager
+  namespace: controller-manager
+  group: openshift
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000540000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000540000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c17
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/dns/DaemonSet/dns-default
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/pki/ca-trust/extracted/pem
+other/cloud-controller-manager-operator/Deployment/cluster-cloud-controller-manager-operator:
+  name: cluster-cloud-controller-manager-operator
+  namespace: cloud-controller-manager-operator
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: false
+    runAsGroup: null
+    runAsUser: null
+    sysctls: []
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: ""
+  runLevel: "0"
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/cloud-controller-manager-config/
+  - /etc/kubernetes
+other/cloud-credential-operator/Deployment/cloud-credential-operator:
+  name: cloud-credential-operator
+  namespace: cloud-credential-operator
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000120000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000120000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c11,c5
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/tls/private
+other/cluster-samples-operator/Deployment/cluster-samples-operator:
+  name: cluster-samples-operator
+  namespace: cluster-samples-operator
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000290000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000290000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c17,c9
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/secrets
+other/cluster-version/Deployment/cluster-version-operator:
+  name: cluster-version-operator
+  namespace: cluster-version
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000030000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000030000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c6,c0
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - KILL
+      - MKNOD
+      - SETGID
+      - SETUID
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: hostaccess
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /etc/ssl/certs
+  - /etc/cvo/updatepayloads
+  - /etc/tls/serving-cert
+  - /etc/tls/service-ca
+other/config-operator/Deployment/openshift-config-operator:
+  name: openshift-config-operator
+  namespace: config-operator
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 65534
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c14,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts: []
+other/image-registry/DaemonSet/node-ca:
+  name: node-ca
+  namespace: image-registry
+  group: other
+  deployedAs: DaemonSet
+  runsOn: all nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: 0
+    runAsUser: 1001
+    sysctls: []
+    privileged: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: privileged
+  runLevel: ""
+  hostNetwork: true
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts:
+  - /tmp/serviceca
+  - /etc/docker/certs.d
+other/image-registry/Deployment/cluster-image-registry-operator:
+  name: cluster-image-registry-operator
+  namespace: image-registry
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000340000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000340000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c18,c17
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /etc/secrets
+other/image-registry/Deployment/image-registry:
+  name: image-registry
+  namespace: image-registry
+  group: other
+  deployedAs: Deployment
+  runsOn: worker nodes
+  securityContext:
+    fsGroup: 1000340000
+    fsGroupChanagePolicy: OnRootMismatch
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000340000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c18,c17
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - networking/dns/DaemonSet/dns-default
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts:
+  - /registry
+  - /etc/secrets
+  - /etc/pki/ca-trust/extracted
+  - /etc/pki/ca-trust/source/anchors
+  - /usr/share/pki/ca-trust-source
+other/insights/Deployment/insights-operator:
+  name: insights-operator
+  namespace: insights
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000200000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000200000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c14,c9
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts: []
+other/service-ca-operator/Deployment/service-ca-operator:
+  name: service-ca-operator
+  namespace: service-ca-operator
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: 1001
+    runAsUser: 1001
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c18,c7
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+other/service-ca/Deployment/service-ca:
+  name: service-ca
+  namespace: service-ca
+  group: other
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000530000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000530000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c12
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+storage/cluster-storage-operator/Deployment/cluster-storage-operator:
+  name: cluster-storage-operator
+  namespace: cluster-storage-operator
+  group: storage
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000140000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000140000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c12,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+storage/cluster-storage-operator/Deployment/csi-snapshot-controller:
+  name: csi-snapshot-controller
+  namespace: cluster-storage-operator
+  group: storage
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000140000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000140000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c12,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts: []
+storage/cluster-storage-operator/Deployment/csi-snapshot-controller-operator:
+  name: csi-snapshot-controller-operator
+  namespace: cluster-storage-operator
+  group: storage
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000140000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000140000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c12,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+storage/cluster-storage-operator/Deployment/csi-snapshot-webhook:
+  name: csi-snapshot-webhook
+  namespace: cluster-storage-operator
+  group: storage
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    fsGroup: 1000140000
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1000140000
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c12,c4
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: restricted-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections:
+  - kube/kube-apiserver-operator/Deployment/kube-apiserver-operator
+  hostMounts:
+  - /etc/snapshot-validation-webhook/certs
+storage/kube-storage-version-migrator-operator/Deployment/kube-storage-version-migrator-operator:
+  name: kube-storage-version-migrator-operator
+  namespace: kube-storage-version-migrator-operator
+  group: storage
+  deployedAs: Deployment
+  runsOn: master nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1001
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c19,c9
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: true
+  externallyExposed: false
+  incomingConnections:
+  - kube/kube-apiserver/StaticPods/kube-apiserver
+  outgoingConnections: []
+  hostMounts: []
+storage/kube-storage-version-migrator/Deployment/migrator:
+  name: migrator
+  namespace: kube-storage-version-migrator
+  group: storage
+  deployedAs: Deployment
+  runsOn: worker nodes
+  securityContext:
+    runAsNonRoot: true
+    runAsGroup: null
+    runAsUser: 1001
+    selinuxOptions:
+      user: ""
+      role: ""
+      type: ""
+      level: s0:c23,c7
+    seccompProfile:
+      type: RuntimeDefault
+      localhostprofile: null
+    sysctls: []
+    capabilities:
+      add: []
+      drop:
+      - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+  scc: nonroot-v2
+  runLevel: ""
+  hostNetwork: false
+  inboundTraffic: false
+  externallyExposed: false
+  incomingConnections: []
+  outgoingConnections: []
+  hostMounts: []

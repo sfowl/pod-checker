@@ -10,6 +10,38 @@ import (
 	"golang.org/x/exp/slices"
 )
 
+type FlowData struct {
+	DstK8S_OwnerName string
+	FlowDirection    string
+	SrcK8S_Namespace string
+	SrcK8S_OwnerName string
+	App              string
+	DstK8S_Namespace string
+	AgentIP          string
+	DstPort          string
+	Etype            string
+	SrcMac           string
+	Proto            string
+	Bytes            string
+	DstK8S_Name      string
+	DstK8S_OwnerType string
+	SrcK8S_Type      string
+	DstAddr          string
+	Duplicate        string
+	DstMac           string
+	SrcK8S_OwnerType string
+	DstK8S_Type      string
+	Packets          string
+	SrcPort          string
+	DstK8S_HostName  string
+	Interface        string
+	Flags            string
+	IfDirection      string
+	DstK8S_HostIP    string
+	SrcAddr          string
+	SrcK8S_Name      string
+}
+
 func getNetworkTraffic(networkCSV *string) []FlowData {
 	file, err := os.Open(*networkCSV)
 	if err != nil {
@@ -102,6 +134,7 @@ func addNetworkDataToComponents(components map[string]Component, serviceToCompon
 		} else {
 			if !slices.Contains(dstComponent.IncomingConnections, srcComponentKey) {
 				dstComponent.IncomingConnections = append(dstComponent.IncomingConnections, srcComponentKey)
+				dstComponent.InboundTraffic = true
 				components[dstComponentKey] = dstComponent
 			}
 		}

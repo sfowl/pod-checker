@@ -68,6 +68,8 @@ func generateDiagram(group string, id int, components map[string]Component) Diag
 		}
 	}
 
+	// byNamespaces := make(map[string][]Cell)
+
 	for _, c := range filteredComponents {
 		cell := Cell{
 			Position: &CellPosition{
@@ -102,6 +104,12 @@ func generateDiagram(group string, id int, components map[string]Component) Diag
 			},
 		}
 		diagram.Cells = append(diagram.Cells, cell)
+
+		// if _, ok := byNamespac[c.Namespace]; ok {
+		// 	byNamespace[c.Namespace] = append(byNamespace[c.Namespace], cell)
+		// } else {
+		// 	byNamespace[c.Namespace] = []Cell{cell}
+		// }
 
 		count++
 	}

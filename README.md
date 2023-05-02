@@ -7,7 +7,7 @@ Reads openshift/kubernetes cluster data, to automatically produce security repor
 Log in to an OpenShift cluster or set the KUBECONFIG env variable, then:
 
 ```
-$ go run . -network-csv ./examples/network-traffic.csv -exclude observability,OLM
+$ go run . -network-csv ./example/input/network-traffic.csv -exclude observability,OLM
 ```
 
 A network-traffic.csv file is a CSV of network traffic data, exported by the [network observability operator](https://docs.openshift.com/container-platform/4.12/networking/network_observability/network-observability-overview.html). Network traffic data like this is necessary to create the links between components in the final report data.
@@ -31,4 +31,4 @@ This will:
 
 ## Examples
 
-![screenshot](/examples/screenshot.png)
+![screenshot](/example/screenshot.png)

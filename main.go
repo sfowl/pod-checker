@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"sort"
 	"strconv"
@@ -14,6 +15,7 @@ import (
 	routeclientv1 "github.com/openshift/client-go/route/clientset/versioned/typed/route/v1"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/exp/slices"
+	"gopkg.in/yaml.v2"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -46,51 +48,20 @@ type Component struct {
 	Name                string
 	Namespace           string
 	Group               string
-	DeployedAs          string
-	RunsOn              string
+	DeployedAs          string                   `yaml:"deployedAs"`
+	RunsOn              string                   `yaml:"runsOn"`
+	SecurityContext     ComponentSecurityContext `yaml:"securityContext"`
 	SCC                 string
-	RunLevel            string
-	HostNetwork         bool
-	InboundTraffic      bool
-	ExternallyExposed   bool
-	IncomingConnections []string
-	OutgoingConnections []string
-	HostMounts          []string
-	Pods                []corev1.Pod
-	Services            []corev1.Service
-	Routes              []routev1.Route
-}
-
-type FlowData struct {
-	DstK8S_OwnerName string
-	FlowDirection    string
-	SrcK8S_Namespace string
-	SrcK8S_OwnerName string
-	App              string
-	DstK8S_Namespace string
-	AgentIP          string
-	DstPort          string
-	Etype            string
-	SrcMac           string
-	Proto            string
-	Bytes            string
-	DstK8S_Name      string
-	DstK8S_OwnerType string
-	SrcK8S_Type      string
-	DstAddr          string
-	Duplicate        string
-	DstMac           string
-	SrcK8S_OwnerType string
-	DstK8S_Type      string
-	Packets          string
-	SrcPort          string
-	DstK8S_HostName  string
-	Interface        string
-	Flags            string
-	IfDirection      string
-	DstK8S_HostIP    string
-	SrcAddr          string
-	SrcK8S_Name      string
+	RunLevel            string           `yaml:"runLevel"`
+	HostNetwork         bool             `yaml:"hostNetwork"`
+	InboundTraffic      bool             `yaml:"inboundTraffic"`
+	ExternallyExposed   bool             `yaml:"externallyExposed"`
+	IncomingConnections []string         `yaml:"incomingConnections"`
+	OutgoingConnections []string         `yaml:"outgoingConnections"`
+	HostMounts          []string         `yaml:"hostMounts"`
+	Pods                []corev1.Pod     `yaml:"-"`
+	Services            []corev1.Service `yaml:"-"`
+	Routes              []routev1.Route  `yaml:"-"`
 }
 
 // XXX this is super inefficient, lazy. Maybe should invert the map.
@@ -134,21 +105,25 @@ func (c Component) Values() []string {
 }
 
 // func (c Component) String() string {
-// 	return fmt.Sprintf("%s\t%s\t%s\t%s\t%s\t%v", c.Namespace, c.Name, c.DeployedAs, c.RunsOn, c.SCC, c.HostNetwork)
+// 	return fmt.Sprintf("%s\t%s\t%s\t%s\t%s\t%v", c.Namespace, c.Name, c.DeployedAs, c.RunsOn, c.SecurityContext, c.HostNetwork)
 // }
 
-func getSCC(p corev1.Pod) string {
-	if scc, ok := p.ObjectMeta.Annotations["openshift.io/scc"]; ok {
-		return scc
+func getSecurityInfo(p corev1.Pod) (string, ComponentSecurityContext) {
+	scc := ""
+	securityContext := ComponentSecurityContext{}
+	securityContext.fromPodSC(p.Spec.SecurityContext)
+	if _, ok := p.ObjectMeta.Annotations["openshift.io/scc"]; ok {
+		scc = p.ObjectMeta.Annotations["openshift.io/scc"]
 	}
 	for _, c := range p.Spec.Containers {
 		if c.SecurityContext != nil {
 			if c.SecurityContext.Privileged != nil && *c.SecurityContext.Privileged {
-				return "privileged"
+				scc = "privileged"
 			}
+			securityContext.updateFromContainerSC(c.SecurityContext)
 		}
 	}
-	return ""
+	return scc, securityContext
 }
 
 func getDeployedNodes(p corev1.Pod, ownerKind string) string {
@@ -186,7 +161,10 @@ func getHostMounts(p corev1.Pod) []string {
 	for _, c := range p.Spec.Containers {
 		for _, m := range c.VolumeMounts {
 			if !strings.HasPrefix(m.MountPath, "/var") {
-				hostMounts = append(hostMounts, m.MountPath)
+				// XXX inefficent, should use map/set
+				if !slices.Contains(hostMounts, m.MountPath) {
+					hostMounts = append(hostMounts, m.MountPath)
+				}
 			}
 		}
 	}
@@ -423,7 +401,7 @@ func main() {
 		}
 
 		runsOn := getDeployedNodes(p, ownerKind)
-		scc := getSCC(p)
+		scc, securityContext := getSecurityInfo(p)
 		podServices := getServices(p, clusterData.ServicesByNamespace)
 		for _, s := range podServices {
 			serviceToComponent[fmt.Sprintf("%s/%s/Service/%s", group, namespace, s.Name)] = componentKey
@@ -433,6 +411,7 @@ func main() {
 		c.RunsOn = runsOn
 		if c.SCC == "" && scc != "" {
 			c.SCC = scc
+			c.SecurityContext = securityContext
 		}
 		if !c.HostNetwork && c.HostNetwork {
 			c.HostNetwork = p.Spec.HostNetwork
@@ -459,12 +438,34 @@ func main() {
 		log.Warn("Can't generate a threat model diagram without network data")
 	}
 
-	printCSV(components, len(clusterData.Pods))
+	// components := filterComponents(components, excludedGroups)
 
-	generateThreatModel(components, "output.json", excludedGroups)
+	printCSV(components)
+	// fmt.Printf("\nThere are %d pods\n", numPods)
+
+	writeYAML(components, "example/output/components.yaml")
+
+	generateThreatModel(components, "example/output/threat_dragon.json", excludedGroups)
 }
 
-func printCSV(components map[string]Component, numPods int) {
+// func filterComponents(components map[string]Component, excludedGroups []string) {
+//
+// }
+
+func writeYAML(components map[string]Component, outputFile string) {
+	yamlData, err := yaml.Marshal(&components)
+
+	if err != nil {
+		fmt.Printf("Error while Marshaling. %v", err)
+	}
+
+	err = ioutil.WriteFile(outputFile, yamlData, 0644)
+	if err != nil {
+		log.Errorf("Unable to write yaml data to %s", outputFile)
+	}
+}
+
+func printCSV(components map[string]Component) {
 	writer := csv.NewWriter(os.Stdout)
 	writer.Comma = '\t'
 
@@ -475,7 +476,7 @@ func printCSV(components map[string]Component, numPods int) {
 	sort.Strings(keys)
 
 	var c Component
-	printValues(writer, []string{"Group", "Namespace", "Name", "DeployedAs", "RunsOn", "SCC", "RunLevel", "HostNetwork", "InboundTraffic?", "ExternallyExposed?", "HostMounts", "IncomingConnections", "OutgoingConnections"})
+	printValues(writer, []string{"Group", "Namespace", "Name", "DeployedAs", "RunsOn", "SecurityContext", "RunLevel", "HostNetwork", "InboundTraffic?", "ExternallyExposed?", "HostMounts", "IncomingConnections", "OutgoingConnections"})
 	for _, k := range keys {
 		c = components[k]
 		printValues(writer, c.Values())
@@ -483,5 +484,4 @@ func printCSV(components map[string]Component, numPods int) {
 
 	writer.Flush()
 
-	// fmt.Printf("\nThere are %d pods\n", numPods)
 }
