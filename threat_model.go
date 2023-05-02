@@ -156,7 +156,7 @@ func generateThreatModel(components map[string]Component, outFilename string, ex
 	tm := ThreatModel{
 		Version: "2.0.1",
 		Summary: Summary{
-			Title:       "OpenShift Threat Model",
+			Title:       title,
 			Description: "test threat model",
 		},
 	}

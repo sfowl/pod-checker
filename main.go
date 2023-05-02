@@ -31,6 +31,8 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 )
 
+const title = "OpenShift Threat Model"
+
 func init() {
 	// Only log the warning severity or above.
 	log.SetLevel(log.WarnLevel)
@@ -443,7 +445,12 @@ func main() {
 	printCSV(components)
 	// fmt.Printf("\nThere are %d pods\n", numPods)
 
-	writeYAML(components, "example/output/components.yaml")
+	threagileReport := genThreagile(components)
+	threagileYAML := marshalYAML(threagileReport)
+	writeYAML(threagileYAML, "example/output/threagile.yaml")
+
+	componentYAML := marshalYAML(components)
+	writeYAML(componentYAML, "example/output/components.yaml")
 
 	generateThreatModel(components, "example/output/threat_dragon.json", excludedGroups)
 }
@@ -452,17 +459,19 @@ func main() {
 //
 // }
 
-func writeYAML(components map[string]Component, outputFile string) {
-	yamlData, err := yaml.Marshal(&components)
-
-	if err != nil {
-		fmt.Printf("Error while Marshaling. %v", err)
-	}
-
-	err = ioutil.WriteFile(outputFile, yamlData, 0644)
+func writeYAML(yamlData []byte, outputFile string) {
+	err := ioutil.WriteFile(outputFile, yamlData, 0644)
 	if err != nil {
 		log.Errorf("Unable to write yaml data to %s", outputFile)
 	}
+}
+
+func marshalYAML(in interface{}) []byte {
+	yamlData, err := yaml.Marshal(&in)
+	if err != nil {
+		panic(fmt.Errorf("Error while Marshaling. %v", err))
+	}
+	return yamlData
 }
 
 func printCSV(components map[string]Component) {
