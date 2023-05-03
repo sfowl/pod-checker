@@ -1,0 +1,41 @@
+name: machine-config-server
+namespace: machine-config-operator
+group: machine management
+deployedAs: DaemonSet
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  fsGroup: 1000300000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000300000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c17,c14
+  suppplementalGroups:
+  - 1000300000
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - KILL
+    - MKNOD
+    - SETGID
+    - SETUID
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: hostnetwork
+runLevel: ""
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: false
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/ssl/mcs
+- /etc/mcs/bootstrap-token

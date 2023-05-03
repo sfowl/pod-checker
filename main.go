@@ -52,10 +52,13 @@ type Component struct {
 	Group               string
 	DeployedAs          string                   `yaml:"deployedAs"`
 	RunsOn              string                   `yaml:"runsOn"`
+	IsOperator          bool                     `yaml:"IsOperator"`
 	SecurityContext     ComponentSecurityContext `yaml:"securityContext"`
 	SCC                 string
 	RunLevel            string           `yaml:"runLevel"`
+	HostIPC             bool             `yaml:"hostPIC"`
 	HostNetwork         bool             `yaml:"hostNetwork"`
+	HostPID             bool             `yaml:"hostPID"`
 	InboundTraffic      bool             `yaml:"inboundTraffic"`
 	ExternallyExposed   bool             `yaml:"externallyExposed"`
 	IncomingConnections []string         `yaml:"incomingConnections"`
@@ -319,7 +322,7 @@ func getComponentKey(namespace string, ownerType string, ownerName string) strin
 
 	// XXX special case
 	if componentKey == "other/default/Service/kubernetes" {
-		componentKey = "kube/kube-apiserver/StaticPods/kube-apiserver"
+		componentKey = "kube control plane/kube-apiserver/StaticPods/kube-apiserver"
 	}
 
 	return componentKey
@@ -409,13 +412,22 @@ func main() {
 			serviceToComponent[fmt.Sprintf("%s/%s/Service/%s", group, namespace, s.Name)] = componentKey
 		}
 
-		// TODO update component
 		c.RunsOn = runsOn
+		if strings.HasSuffix(c.Name, "operator") {
+			c.IsOperator = true
+		}
+
 		if c.SCC == "" && scc != "" {
 			c.SCC = scc
 			c.SecurityContext = securityContext
 		}
-		if !c.HostNetwork && c.HostNetwork {
+		if !c.HostIPC && p.Spec.HostIPC {
+			c.HostIPC = p.Spec.HostIPC
+		}
+		if !c.HostNetwork && p.Spec.HostNetwork {
+			c.HostNetwork = p.Spec.HostNetwork
+		}
+		if !c.HostNetwork && p.Spec.HostNetwork {
 			c.HostNetwork = p.Spec.HostNetwork
 		}
 		if len(podServices) > 0 {
@@ -451,18 +463,44 @@ func main() {
 
 	componentYAML := marshalYAML(components)
 	writeYAML(componentYAML, "example/output/components.yaml")
+	// also write one component per file
+	writeComponents(components, "example/output/components")
 
-	generateThreatModel(components, "example/output/threat_dragon.json", excludedGroups)
+	survey := genSurvey(components)
+	surveyYAML := marshalYAML(survey)
+	writeYAML(surveyYAML, "example/output/survey.yaml")
+	writeSurvey(components, "example/output/survey")
+
+	// generateThreatModel(components, "example/output/threat_dragon.json", excludedGroups)
 }
 
 // func filterComponents(components map[string]Component, excludedGroups []string) {
 //
 // }
 
+func writeComponents(components map[string]Component, outputDir string) {
+	for _, c := range components {
+		componentYAML := marshalYAML(c)
+		dir := fmt.Sprintf("%s/%s", outputDir, strings.ReplaceAll(c.Group, " ", "_"))
+		os.MkdirAll(dir, 0755)
+		writeYAML(componentYAML, fmt.Sprintf("%s/%s.yaml", dir, c.Name))
+	}
+}
+
+func writeSurvey(components map[string]Component, outputDir string) {
+	for k, c := range components {
+		survey := genSurvey(map[string]Component{k: c})
+		surveyYAML := marshalYAML(survey[0])
+		dir := fmt.Sprintf("%s/%s", outputDir, strings.ReplaceAll(c.Group, " ", "_"))
+		os.MkdirAll(dir, 0755)
+		writeYAML(surveyYAML, fmt.Sprintf("%s/%s.yaml", dir, c.Name))
+	}
+}
+
 func writeYAML(yamlData []byte, outputFile string) {
 	err := ioutil.WriteFile(outputFile, yamlData, 0644)
 	if err != nil {
-		log.Errorf("Unable to write yaml data to %s", outputFile)
+		log.Errorf("Unable to write yaml data to %s: %s", outputFile, err)
 	}
 }
 

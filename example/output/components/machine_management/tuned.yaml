@@ -1,0 +1,33 @@
+name: tuned
+namespace: cluster-node-tuning-operator
+group: machine management
+deployedAs: DaemonSet
+runsOn: all nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: ""
+hostPIC: true
+hostNetwork: true
+hostPID: false
+inboundTraffic: false
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/modprobe.d
+- /etc/sysconfig
+- /etc/sysctl.d
+- /etc/sysctl.conf
+- /etc/systemd
+- /sys
+- /run/systemd/system
+- /lib/modules
+- /host

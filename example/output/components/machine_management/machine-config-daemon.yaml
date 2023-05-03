@@ -1,0 +1,27 @@
+name: machine-config-daemon
+namespace: machine-config-operator
+group: machine management
+deployedAs: DaemonSet
+runsOn: all nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: ""
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /rootfs
+- /etc/tls/private
+- /etc/tls/cookie-secret

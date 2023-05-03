@@ -1,0 +1,41 @@
+name: cluster-version-operator
+namespace: cluster-version
+group: openshift control plane
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  fsGroup: 1000030000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000030000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c6,c0
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - KILL
+    - MKNOD
+    - SETGID
+    - SETUID
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: hostaccess
+runLevel: ""
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/ssl/certs
+- /etc/cvo/updatepayloads
+- /etc/tls/serving-cert
+- /etc/tls/service-ca

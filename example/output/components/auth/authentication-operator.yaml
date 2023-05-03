@@ -1,0 +1,39 @@
+name: authentication-operator
+namespace: authentication-operator
+group: auth
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: 0
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c15,c10
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - MKNOD
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: anyuid
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-scheduler/StaticPods/kube-scheduler
+- networking/dns/DaemonSet/dns-default
+- auth/authentication/Deployment/oauth-openshift
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- kube control plane/kube-scheduler/StaticPods/kube-scheduler
+- auth/authentication/Deployment/oauth-openshift
+hostMounts: []

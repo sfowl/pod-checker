@@ -1,0 +1,37 @@
+name: cluster-node-tuning-operator
+namespace: cluster-node-tuning-operator
+group: machine management
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 499
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c17,c4
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - MKNOD
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: anyuid
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- kube control plane/kube-apiserver-operator/Deployment/kube-apiserver-operator
+hostMounts:
+- /etc/secrets
+- /apiserver.local.config/certificates

@@ -1,0 +1,37 @@
+name: kube-apiserver-operator
+namespace: kube-apiserver-operator
+group: kube control plane
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- machine management/machine-api/Service/machine-api-operator-webhook
+- machine management/machine-api/Deployment/machine-api-controllers
+- machine management/machine-api/Deployment/cluster-autoscaler-operator
+- networking/dns/DaemonSet/dns-default
+- console/console-operator/Deployment/console-operator
+- storage/cluster-storage-operator/Service/csi-snapshot-webhook
+- machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-operator
+- openshift control plane/cloud-credential-operator/Deployment/pod-identity-webhook
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- machine management/machine-api/Deployment/machine-api-controllers
+- console/console-operator/Deployment/console-operator
+- storage/cluster-storage-operator/Deployment/csi-snapshot-webhook
+- openshift control plane/cloud-credential-operator/Deployment/pod-identity-webhook
+hostMounts: []

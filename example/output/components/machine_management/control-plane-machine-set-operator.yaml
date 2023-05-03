@@ -1,0 +1,39 @@
+name: control-plane-machine-set-operator
+namespace: machine-api
+group: machine management
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  fsGroup: 1000470000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000470000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c22,c4
+  seccompProfile:
+    type: RuntimeDefault
+    localhostprofile: null
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - ALL
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: restricted-v2
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts:
+- /tmp/k8s-webhook-server/serving-certs

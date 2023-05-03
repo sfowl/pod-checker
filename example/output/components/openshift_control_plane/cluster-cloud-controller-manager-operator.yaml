@@ -1,0 +1,26 @@
+name: cluster-cloud-controller-manager-operator
+namespace: cloud-controller-manager-operator
+group: openshift control plane
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: false
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/cloud-controller-manager-config/
+- /etc/kubernetes

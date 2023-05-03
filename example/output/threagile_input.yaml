@@ -3,7 +3,7 @@ title: OpenShift Threat Model
 author:
   name: ""
   homepage: ""
-date: "2023-05-02"
+date: "2023-05-03"
 business_overview:
   description: ""
   images: []
@@ -76,6 +76,21 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
   auth-authentication-operator-Deployment-authentication-operator:
     id: auth-authentication-operator-Deployment-authentication-operator
     description: ""
@@ -119,8 +134,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-kube-scheduler-StaticPods-kube-scheduler:
-        target: kube-kube-scheduler-StaticPods-kube-scheduler
+      kube-control-plane-kube-scheduler-StaticPods-kube-scheduler:
+        target: kube-control-plane-kube-scheduler-StaticPods-kube-scheduler
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -190,7 +205,22 @@ technical_assets:
     data_assets_stored: []
     data_formats_accepted: []
     diagram_tweak_order: 0
-    communication_links: {}
+    communication_links:
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
   console-console-Deployment-downloads:
     id: console-console-Deployment-downloads
     description: ""
@@ -218,7 +248,22 @@ technical_assets:
     data_assets_stored: []
     data_formats_accepted: []
     diagram_tweak_order: 0
-    communication_links: {}
+    communication_links:
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
   console-console-operator-Deployment-console-operator:
     id: console-console-operator-Deployment-console-operator
     description: ""
@@ -247,8 +292,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links:
-      kube-kube-apiserver-operator-Deployment-kube-apiserver-operator:
-        target: kube-kube-apiserver-operator-Deployment-kube-apiserver-operator
+      kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+        target: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -262,8 +307,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-  kube-etcd-StaticPods-etcd:
-    id: kube-etcd-StaticPods-etcd
+  kube-control-plane-etcd-StaticPods-etcd:
+    id: kube-control-plane-etcd-StaticPods-etcd
     description: ""
     type: process
     usage: devops
@@ -292,8 +337,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  kube-etcd-operator-Deployment-etcd-operator:
-    id: kube-etcd-operator-Deployment-etcd-operator
+  kube-control-plane-etcd-operator-Deployment-etcd-operator:
+    id: kube-control-plane-etcd-operator-Deployment-etcd-operator
     description: ""
     type: process
     usage: devops
@@ -320,8 +365,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  kube-kube-apiserver-StaticPods-kube-apiserver:
-    id: kube-kube-apiserver-StaticPods-kube-apiserver
+  kube-control-plane-kube-apiserver-StaticPods-kube-apiserver:
+    id: kube-control-plane-kube-apiserver-StaticPods-kube-apiserver
     description: ""
     type: process
     usage: devops
@@ -425,8 +470,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-etcd-StaticPods-etcd:
-        target: kube-etcd-StaticPods-etcd
+      kube-control-plane-etcd-StaticPods-etcd:
+        target: kube-control-plane-etcd-StaticPods-etcd
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -440,8 +485,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-etcd-operator-Deployment-etcd-operator:
-        target: kube-etcd-operator-Deployment-etcd-operator
+      kube-control-plane-etcd-operator-Deployment-etcd-operator:
+        target: kube-control-plane-etcd-operator-Deployment-etcd-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -455,8 +500,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-kube-apiserver-operator-Deployment-kube-apiserver-operator:
-        target: kube-kube-apiserver-operator-Deployment-kube-apiserver-operator
+      kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+        target: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -470,8 +515,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-kube-controller-manager-operator-Deployment-kube-controller-manager-operator:
-        target: kube-kube-controller-manager-operator-Deployment-kube-controller-manager-operator
+      kube-control-plane-kube-controller-manager-operator-Deployment-kube-controller-manager-operator:
+        target: kube-control-plane-kube-controller-manager-operator-Deployment-kube-controller-manager-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -485,8 +530,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-kube-scheduler-StaticPods-kube-scheduler:
-        target: kube-kube-scheduler-StaticPods-kube-scheduler
+      kube-control-plane-kube-scheduler-StaticPods-kube-scheduler:
+        target: kube-control-plane-kube-scheduler-StaticPods-kube-scheduler
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -500,8 +545,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      kube-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator:
-        target: kube-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator
+      kube-control-plane-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator:
+        target: kube-control-plane-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -515,8 +560,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      openshift-apiserver-Deployment-apiserver:
-        target: openshift-apiserver-Deployment-apiserver
+      machine-management-cluster-node-tuning-operator-Deployment-cluster-node-tuning-operator:
+        target: machine-management-cluster-node-tuning-operator-Deployment-cluster-node-tuning-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -530,8 +575,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      openshift-apiserver-operator-Deployment-openshift-apiserver-operator:
-        target: openshift-apiserver-operator-Deployment-openshift-apiserver-operator
+      machine-management-machine-api-Deployment-cluster-autoscaler-operator:
+        target: machine-management-machine-api-Deployment-cluster-autoscaler-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -545,8 +590,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      openshift-controller-manager-Deployment-controller-manager:
-        target: openshift-controller-manager-Deployment-controller-manager
+      machine-management-machine-api-Deployment-control-plane-machine-set-operator:
+        target: machine-management-machine-api-Deployment-control-plane-machine-set-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -560,8 +605,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-      openshift-controller-manager-operator-Deployment-openshift-controller-manager-operator:
-        target: openshift-controller-manager-operator-Deployment-openshift-controller-manager-operator
+      machine-management-machine-api-Deployment-machine-api-operator:
+        target: machine-management-machine-api-Deployment-machine-api-operator
         description: ""
         protocol: unknown-protocol
         authentication: none
@@ -575,8 +620,263 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-  kube-kube-apiserver-operator-Deployment-kube-apiserver-operator:
-    id: kube-kube-apiserver-operator-Deployment-kube-apiserver-operator
+      machine-management-machine-config-operator-Deployment-machine-config-controller:
+        target: machine-management-machine-config-operator-Deployment-machine-config-controller
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      machine-management-machine-config-operator-Deployment-machine-config-operator:
+        target: machine-management-machine-config-operator-Deployment-machine-config-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-dns-DaemonSet-dns-default:
+        target: networking-dns-DaemonSet-dns-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-dns-operator-Deployment-dns-operator:
+        target: networking-dns-operator-Deployment-dns-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-ingress-operator-Deployment-ingress-operator:
+        target: networking-ingress-operator-Deployment-ingress-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-multus-DaemonSet-network-metrics-daemon:
+        target: networking-multus-DaemonSet-network-metrics-daemon
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-multus-Deployment-multus-admission-controller:
+        target: networking-multus-Deployment-multus-admission-controller
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-network-diagnostics-Deployment-network-check-source:
+        target: networking-network-diagnostics-Deployment-network-check-source
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-route-controller-manager-Deployment-route-controller-manager:
+        target: networking-route-controller-manager-Deployment-route-controller-manager
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-service-ca-Deployment-service-ca:
+        target: networking-service-ca-Deployment-service-ca
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-service-ca-operator-Deployment-service-ca-operator:
+        target: networking-service-ca-operator-Deployment-service-ca-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-apiserver-Deployment-apiserver:
+        target: openshift-control-plane-apiserver-Deployment-apiserver
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-apiserver-operator-Deployment-openshift-apiserver-operator:
+        target: openshift-control-plane-apiserver-operator-Deployment-openshift-apiserver-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-cloud-credential-operator-Deployment-cloud-credential-operator:
+        target: openshift-control-plane-cloud-credential-operator-Deployment-cloud-credential-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-controller-manager-Deployment-controller-manager:
+        target: openshift-control-plane-controller-manager-Deployment-controller-manager
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-controller-manager-operator-Deployment-openshift-controller-manager-operator:
+        target: openshift-control-plane-controller-manager-operator-Deployment-openshift-controller-manager-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+    id: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
     description: ""
     type: process
     usage: devops
@@ -618,8 +918,8 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-  kube-kube-controller-manager-StaticPods-kube-controller-manager:
-    id: kube-kube-controller-manager-StaticPods-kube-controller-manager
+  kube-control-plane-kube-controller-manager-StaticPods-kube-controller-manager:
+    id: kube-control-plane-kube-controller-manager-StaticPods-kube-controller-manager
     description: ""
     type: process
     usage: devops
@@ -647,8 +947,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  kube-kube-controller-manager-operator-Deployment-kube-controller-manager-operator:
-    id: kube-kube-controller-manager-operator-Deployment-kube-controller-manager-operator
+  kube-control-plane-kube-controller-manager-operator-Deployment-kube-controller-manager-operator:
+    id: kube-control-plane-kube-controller-manager-operator-Deployment-kube-controller-manager-operator
     description: ""
     type: process
     usage: devops
@@ -675,8 +975,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  kube-kube-scheduler-StaticPods-kube-scheduler:
-    id: kube-kube-scheduler-StaticPods-kube-scheduler
+  kube-control-plane-kube-scheduler-StaticPods-kube-scheduler:
+    id: kube-control-plane-kube-scheduler-StaticPods-kube-scheduler
     description: ""
     type: process
     usage: devops
@@ -719,8 +1019,23 @@ technical_assets:
         data_assets_received: []
         diagram_tweak_weight: 0
         diagram_tweak_constraint: false
-  kube-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator:
-    id: kube-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  kube-control-plane-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator:
+    id: kube-control-plane-kube-scheduler-operator-Deployment-openshift-kube-scheduler-operator
     description: ""
     type: process
     usage: devops
@@ -747,8 +1062,1092 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  openshift-apiserver-Deployment-apiserver:
-    id: openshift-apiserver-Deployment-apiserver
+  machine-management-cluster-machine-approver-Deployment-machine-approver:
+    id: machine-management-cluster-machine-approver-Deployment-machine-approver
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-cluster-node-tuning-operator-DaemonSet-tuned:
+    id: machine-management-cluster-node-tuning-operator-DaemonSet-tuned
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-cluster-node-tuning-operator-Deployment-cluster-node-tuning-operator:
+    id: machine-management-cluster-node-tuning-operator-Deployment-cluster-node-tuning-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+        target: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  machine-management-machine-api-Deployment-cluster-autoscaler-operator:
+    id: machine-management-machine-api-Deployment-cluster-autoscaler-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+        target: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  machine-management-machine-api-Deployment-cluster-baremetal-operator:
+    id: machine-management-machine-api-Deployment-cluster-baremetal-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-api-Deployment-control-plane-machine-set-operator:
+    id: machine-management-machine-api-Deployment-control-plane-machine-set-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-api-Deployment-machine-api-operator:
+    id: machine-management-machine-api-Deployment-machine-api-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-config-operator-DaemonSet-machine-config-daemon:
+    id: machine-management-machine-config-operator-DaemonSet-machine-config-daemon
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-config-operator-DaemonSet-machine-config-server:
+    id: machine-management-machine-config-operator-DaemonSet-machine-config-server
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-config-operator-Deployment-machine-config-controller:
+    id: machine-management-machine-config-operator-Deployment-machine-config-controller
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  machine-management-machine-config-operator-Deployment-machine-config-operator:
+    id: machine-management-machine-config-operator-Deployment-machine-config-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-dns-DaemonSet-dns-default:
+    id: networking-dns-DaemonSet-dns-default
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      auth-authentication-operator-Deployment-authentication-operator:
+        target: auth-authentication-operator-Deployment-authentication-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      console-console-Deployment-console:
+        target: console-console-Deployment-console
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      kube-control-plane-etcd-operator-Deployment-etcd-operator:
+        target: kube-control-plane-etcd-operator-Deployment-etcd-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator:
+        target: kube-control-plane-kube-apiserver-operator-Deployment-kube-apiserver-operator
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-network-diagnostics-Deployment-network-check-source:
+        target: networking-network-diagnostics-Deployment-network-check-source
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-controller-manager-Deployment-controller-manager:
+        target: openshift-control-plane-controller-manager-Deployment-controller-manager
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  networking-dns-DaemonSet-node-resolver:
+    id: networking-dns-DaemonSet-node-resolver
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-dns-operator-Deployment-dns-operator:
+    id: networking-dns-operator-Deployment-dns-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-ingress-Deployment-router-default:
+    id: networking-ingress-Deployment-router-default
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      auth-authentication-Deployment-oauth-openshift:
+        target: auth-authentication-Deployment-oauth-openshift
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      console-console-Deployment-console:
+        target: console-console-Deployment-console
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      console-console-Deployment-downloads:
+        target: console-console-Deployment-downloads
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      kube-control-plane-kube-apiserver-StaticPods-kube-apiserver:
+        target: kube-control-plane-kube-apiserver-StaticPods-kube-apiserver
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      networking-ingress-canary-DaemonSet-ingress-canary:
+        target: networking-ingress-canary-DaemonSet-ingress-canary
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  networking-ingress-canary-DaemonSet-ingress-canary:
+    id: networking-ingress-canary-DaemonSet-ingress-canary
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: true
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      networking-ingress-Deployment-router-default:
+        target: networking-ingress-Deployment-router-default
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  networking-ingress-operator-Deployment-ingress-operator:
+    id: networking-ingress-operator-Deployment-ingress-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-multus-DaemonSet-multus:
+    id: networking-multus-DaemonSet-multus
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-multus-DaemonSet-multus-additional-cni-plugins:
+    id: networking-multus-DaemonSet-multus-additional-cni-plugins
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-multus-DaemonSet-network-metrics-daemon:
+    id: networking-multus-DaemonSet-network-metrics-daemon
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-multus-Deployment-multus-admission-controller:
+    id: networking-multus-Deployment-multus-admission-controller
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-network-diagnostics-DaemonSet-network-check-target:
+    id: networking-network-diagnostics-DaemonSet-network-check-target
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      networking-network-diagnostics-Deployment-network-check-source:
+        target: networking-network-diagnostics-Deployment-network-check-source
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  networking-network-diagnostics-Deployment-network-check-source:
+    id: networking-network-diagnostics-Deployment-network-check-source
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links:
+      networking-network-diagnostics-DaemonSet-network-check-target:
+        target: networking-network-diagnostics-DaemonSet-network-check-target
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      openshift-control-plane-apiserver-Deployment-apiserver:
+        target: openshift-control-plane-apiserver-Deployment-apiserver
+        description: ""
+        protocol: unknown-protocol
+        authentication: none
+        authorization: none
+        tags: []
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: devops
+        data_assets_sent: []
+        data_assets_received: []
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  networking-network-operator-Deployment-network-operator:
+    id: networking-network-operator-Deployment-network-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-route-controller-manager-Deployment-route-controller-manager:
+    id: networking-route-controller-manager-Deployment-route-controller-manager
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-sdn-DaemonSet-sdn:
+    id: networking-sdn-DaemonSet-sdn
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - privileged
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-sdn-DaemonSet-sdn-controller:
+    id: networking-sdn-DaemonSet-sdn-controller
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-service-ca-Deployment-service-ca:
+    id: networking-service-ca-Deployment-service-ca
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  networking-service-ca-operator-Deployment-service-ca-operator:
+    id: networking-service-ca-operator-Deployment-service-ca-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  openshift-control-plane-apiserver-Deployment-apiserver:
+    id: openshift-control-plane-apiserver-Deployment-apiserver
     description: ""
     type: process
     usage: devops
@@ -776,8 +2175,8 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  openshift-apiserver-operator-Deployment-openshift-apiserver-operator:
-    id: openshift-apiserver-operator-Deployment-openshift-apiserver-operator
+  openshift-control-plane-apiserver-operator-Deployment-openshift-apiserver-operator:
+    id: openshift-control-plane-apiserver-operator-Deployment-openshift-apiserver-operator
     description: ""
     type: process
     usage: devops
@@ -804,8 +2203,37 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  openshift-controller-manager-Deployment-controller-manager:
-    id: openshift-controller-manager-Deployment-controller-manager
+  openshift-control-plane-cloud-controller-manager-operator-Deployment-cluster-cloud-controller-manager-operator:
+    id: openshift-control-plane-cloud-controller-manager-operator-Deployment-cluster-cloud-controller-manager-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  openshift-control-plane-cloud-credential-operator-Deployment-cloud-credential-operator:
+    id: openshift-control-plane-cloud-credential-operator-Deployment-cloud-credential-operator
     description: ""
     type: process
     usage: devops
@@ -832,8 +2260,93 @@ technical_assets:
     data_formats_accepted: []
     diagram_tweak_order: 0
     communication_links: {}
-  openshift-controller-manager-operator-Deployment-openshift-controller-manager-operator:
-    id: openshift-controller-manager-operator-Deployment-openshift-controller-manager-operator
+  openshift-control-plane-cluster-version-Deployment-cluster-version-operator:
+    id: openshift-control-plane-cluster-version-Deployment-cluster-version-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags:
+    - hostNetwork
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  openshift-control-plane-config-operator-Deployment-openshift-config-operator:
+    id: openshift-control-plane-config-operator-Deployment-openshift-config-operator
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  openshift-control-plane-controller-manager-Deployment-controller-manager:
+    id: openshift-control-plane-controller-manager-Deployment-controller-manager
+    description: ""
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: unknown-technology
+    tags: []
+    internet: false
+    machine: container
+    encryption: none
+    owner: ""
+    confidentiality: confidential
+    integrity: operational
+    availability: operational
+    justification_cia_rating: ""
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+    - some-data
+    data_assets_stored: []
+    data_formats_accepted: []
+    diagram_tweak_order: 0
+    communication_links: {}
+  openshift-control-plane-controller-manager-operator-Deployment-openshift-controller-manager-operator:
+    id: openshift-control-plane-controller-manager-operator-Deployment-openshift-controller-manager-operator
     description: ""
     type: process
     usage: devops

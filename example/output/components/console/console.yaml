@@ -1,0 +1,42 @@
+name: console
+namespace: console
+group: console
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  fsGroup: 1000640000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000640000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c25,c20
+  seccompProfile:
+    type: RuntimeDefault
+    localhostprofile: null
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - ALL
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: restricted-v2
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: true
+incomingConnections:
+- networking/ingress/Deployment/router-default
+- networking/dns/DaemonSet/dns-default
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- networking/ingress/Deployment/router-default
+hostMounts:
+- /etc/pki/ca-trust/extracted/pem

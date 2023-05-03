@@ -1,0 +1,28 @@
+name: etcd
+namespace: etcd
+group: kube control plane
+deployedAs: StaticPods
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts:
+- /etc/kubernetes/manifests
+- /etc/kubernetes/static-pod-resources
+- /etc/kubernetes/static-pod-certs

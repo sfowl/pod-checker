@@ -1,0 +1,29 @@
+name: multus
+namespace: multus
+group: networking
+deployedAs: DaemonSet
+runsOn: all nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: false
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /entrypoint
+- /host/etc/os-release
+- /host/etc/cni/net.d
+- /host/var/run/multus/cni/net.d
+- /host/opt/cni/bin

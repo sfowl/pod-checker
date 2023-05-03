@@ -1,0 +1,29 @@
+name: oauth-openshift
+namespace: authentication
+group: auth
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: 0
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: true
+incomingConnections:
+- networking/ingress/Deployment/router-default
+- auth/authentication-operator/Deployment/authentication-operator
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- networking/ingress/Deployment/router-default
+- auth/authentication-operator/Deployment/authentication-operator
+hostMounts: []

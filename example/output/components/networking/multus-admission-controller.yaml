@@ -1,0 +1,26 @@
+name: multus-admission-controller
+namespace: multus
+group: networking
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts:
+- /etc/webhook

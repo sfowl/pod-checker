@@ -1,0 +1,36 @@
+name: machine-config-operator
+namespace: machine-config-operator
+group: machine management
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 65534
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c17,c14
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - MKNOD
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: hostmount-anyuid
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts:
+- /etc/ssl/kubernetes/ca.crt
+- /etc/mco/images

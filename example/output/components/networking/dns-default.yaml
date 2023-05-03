@@ -1,0 +1,34 @@
+name: dns-default
+namespace: dns
+group: networking
+deployedAs: DaemonSet
+runsOn: all nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections:
+- networking/network-diagnostics/Deployment/network-check-source
+- kube control plane/kube-apiserver-operator/Deployment/kube-apiserver-operator
+- storage/image-registry/Deployment/image-registry
+- kube control plane/etcd-operator/Deployment/etcd-operator
+- openshift control plane/controller-manager/Deployment/controller-manager
+- console/console/Deployment/console
+- auth/authentication-operator/Deployment/authentication-operator
+hostMounts:
+- /etc/coredns
+- /etc/tls/private

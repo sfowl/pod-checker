@@ -1,0 +1,38 @@
+name: route-controller-manager
+namespace: route-controller-manager
+group: networking
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  fsGroup: 1000550000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000550000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c23,c22
+  seccompProfile:
+    type: RuntimeDefault
+    localhostprofile: null
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - ALL
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: restricted-v2
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts: []

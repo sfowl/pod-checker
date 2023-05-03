@@ -1,0 +1,69 @@
+name: kube-apiserver
+namespace: kube-apiserver
+group: kube control plane
+deployedAs: StaticPods
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- networking/ingress/Deployment/router-default
+outgoingConnections:
+- networking/service-ca-operator/Deployment/service-ca-operator
+- networking/service-ca/Deployment/service-ca
+- networking/route-controller-manager/Deployment/route-controller-manager
+- auth/oauth-apiserver/Deployment/apiserver
+- networking/network-diagnostics/Deployment/network-check-source
+- networking/multus/DaemonSet/network-metrics-daemon
+- networking/multus/Deployment/multus-admission-controller
+- machine management/machine-config-operator/Deployment/machine-config-operator
+- machine management/machine-config-operator/Deployment/machine-config-controller
+- machine management/machine-api/Deployment/machine-api-operator
+- machine management/machine-api/Deployment/machine-api-controllers
+- machine management/machine-api/Deployment/control-plane-machine-set-operator
+- machine management/machine-api/Deployment/cluster-autoscaler-operator
+- storage/kube-storage-version-migrator-operator/Deployment/kube-storage-version-migrator-operator
+- kube control plane/kube-scheduler-operator/Deployment/openshift-kube-scheduler-operator
+- kube control plane/kube-scheduler/StaticPods/kube-scheduler
+- kube control plane/kube-controller-manager-operator/Deployment/kube-controller-manager-operator
+- kube control plane/kube-apiserver-operator/Deployment/kube-apiserver-operator
+- networking/ingress-operator/Deployment/ingress-operator
+- networking/ingress/Deployment/router-default
+- storage/image-registry/Deployment/image-registry
+- storage/image-registry/Deployment/cluster-image-registry-operator
+- kube control plane/etcd-operator/Deployment/etcd-operator
+- kube control plane/etcd/StaticPods/etcd
+- networking/dns-operator/Deployment/dns-operator
+- networking/dns/DaemonSet/dns-default
+- openshift control plane/controller-manager-operator/Deployment/openshift-controller-manager-operator
+- openshift control plane/controller-manager/Deployment/controller-manager
+- console/console-operator/Deployment/console-operator
+- console/console/Deployment/console
+- storage/cluster-storage-operator/Deployment/csi-snapshot-webhook
+- storage/cluster-storage-operator/Deployment/csi-snapshot-controller-operator
+- storage/cluster-storage-operator/Deployment/cluster-storage-operator
+- other/cluster-samples-operator/Deployment/cluster-samples-operator
+- machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-operator
+- other/cluster-csi-drivers/Deployment/aws-ebs-csi-driver-operator
+- other/cluster-csi-drivers/Deployment/aws-ebs-csi-driver-controller
+- openshift control plane/cloud-credential-operator/Deployment/cloud-credential-operator
+- auth/authentication-operator/Deployment/authentication-operator
+- auth/authentication/Deployment/oauth-openshift
+- openshift control plane/apiserver-operator/Deployment/openshift-apiserver-operator
+- openshift control plane/apiserver/Deployment/apiserver
+hostMounts:
+- /etc/kubernetes/static-pod-resources
+- /etc/kubernetes/static-pod-certs

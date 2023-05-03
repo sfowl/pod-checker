@@ -1,0 +1,52 @@
+name: router-default
+namespace: ingress
+group: networking
+deployedAs: Deployment
+runsOn: worker nodes
+IsOperator: false
+securityContext:
+  fsGroup: 1000600000
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 1000600000
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c25,c0
+  suppplementalGroups:
+  - 1000600000
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - KILL
+    - MKNOD
+    - SETGID
+    - SETUID
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: true
+scc: hostnetwork
+runLevel: ""
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-scheduler/StaticPods/kube-scheduler
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+- networking/ingress-canary/DaemonSet/ingress-canary
+- console/console/Deployment/downloads
+- console/console/Deployment/console
+- auth/authentication/Deployment/oauth-openshift
+outgoingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+- networking/ingress-canary/DaemonSet/ingress-canary
+- console/console/Deployment/downloads
+- console/console/Deployment/console
+- auth/authentication/Deployment/oauth-openshift
+hostMounts:
+- /etc/pki/tls/private
+- /etc/pki/tls/metrics-certs

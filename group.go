@@ -7,13 +7,7 @@ var (
 func init() {
 	// high level "group" -> namespace
 	categorizedNamespaces = map[string][]string{
-		"openshift": []string{
-			"apiserver-operator",
-			"apiserver",
-			"controller-manager-operator",
-			"controller-manager",
-		},
-		"kube": []string{
+		"kube control plane": []string{
 			"kube-apiserver-operator",
 			"kube-apiserver",
 			"kube-controller-manager-operator",
@@ -23,10 +17,15 @@ func init() {
 			"etcd-operator",
 			"etcd",
 		},
-		"auth": []string{
-			"authentication-operator",
-			"authentication",
-			"oauth-apiserver",
+		"openshift control plane": []string{
+			"apiserver-operator",
+			"apiserver",
+			"controller-manager-operator",
+			"controller-manager",
+			"cloud-controller-manager-operator",
+			"cloud-credential-operator",
+			"cluster-version",
+			"config-operator",
 		},
 		"machine management": []string{
 			"cluster-machine-approver",
@@ -34,12 +33,18 @@ func init() {
 			"machine-api",
 			"machine-config-operator",
 		},
-		"observability": {
-			"monitoring",
-		},
 		"OLM": {
 			"marketplace",
 			"operator-lifecycle-manager",
+		},
+		"auth": []string{
+			"authentication-operator",
+			"authentication",
+			"oauth-apiserver",
+		},
+		"console": []string{
+			"console-operator",
+			"console",
 		},
 		"networking": {
 			"dns-operator",
@@ -52,26 +57,21 @@ func init() {
 			"ingress",
 			"route-controller-manager",
 			"sdn",
+			"service-ca-operator",
+			"service-ca",
+		},
+		"observability": {
+			"monitoring",
 		},
 		"storage": []string{
 			"cluster-storage-operator",
 			"kube-storage-version-migrator-operator",
 			"kube-storage-version-migrator",
-		},
-		"console": []string{
-			"console-operator",
-			"console",
+			"image-registry",
 		},
 		"other": []string{
-			"cloud-controller-manager-operator",
-			"cloud-credential-operator",
 			"cluster-samples-operator",
-			"cluster-version",
-			"config-operator",
-			"image-registry",
 			"insights",
-			"service-ca-operator",
-			"service-ca",
 		},
 	}
 }

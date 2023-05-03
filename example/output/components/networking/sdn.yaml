@@ -1,0 +1,34 @@
+name: sdn
+namespace: sdn
+group: networking
+deployedAs: DaemonSet
+runsOn: all nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: privileged
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /config
+- /config-mtu-migration
+- /env
+- /run/netns
+- /host
+- /host-cni-bin
+- /etc/cni/net.d
+- /lib/modules
+- /etc/sysconfig
+- /etc/pki/tls/metrics-certs

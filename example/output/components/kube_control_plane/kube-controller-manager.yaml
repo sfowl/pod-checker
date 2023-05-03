@@ -1,0 +1,26 @@
+name: kube-controller-manager
+namespace: kube-controller-manager
+group: kube control plane
+deployedAs: StaticPods
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/kubernetes/static-pod-resources
+- /etc/kubernetes/static-pod-certs

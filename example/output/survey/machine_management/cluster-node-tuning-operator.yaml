@@ -1,0 +1,116 @@
+intro:
+  name: Intro
+  questions:
+  - question: Component Name
+    answer: cluster-node-tuning-operator
+  - question: Owner(s)
+    answer: ""
+  - question: Description
+    answer: ""
+  - question: Functional Area
+    answer: machine management
+  - question: Is the component an operator ?
+    answer: "true"
+    hint: Answer Yes → Go to “Operators” section
+  - question: Document any sensitive data that the component might process
+    answer: ""
+communications:
+  name: Communications
+  questions:
+  - question: 'Does the component present inbound non-encrypted interfaces (eg, HTTP)
+      ? '
+    answer: ""
+  - question: 'Does the component enforce encryption on outbound communications (eg.
+      HTTPS, TLS, etc) ? '
+    answer: ""
+    hint: Even peer-to-peer communication within the same cluster
+  - question: Are the component's communications restricted by network policies, either
+      ingress or egress?
+    answer: "no"
+rbacandserviceaccounts:
+  name: RBAC and Service Accounts
+  questions:
+  - question: 'Does the service account bound to the component use short-lived tokens? '
+    answer: ""
+  - question: Is there any long-lived token bound to the service account ?
+    answer: ""
+  - question: Is there any use of wildcards in the Roles and/or ClusterRoles assigned
+      to the service account bound to the component? Both in the namespace field and
+      in the permissions field
+    answer: ""
+encryption:
+  name: Encryption
+  questions:
+  - question: Does the component expose by default any non-secure cipher suite ?
+    answer: ""
+  - question: Does the component disable certificate validation for any communication
+      ?
+    answer: ""
+  - question: Does the component expose a self-signed certificate ?
+    answer: ""
+  - question: Does the component perform any cryptographic operations such as encryption,
+      decryption, signing, verification, etc
+    answer: ""
+  - question: Does the component expose any certificates that are not automatically
+      renewed periodically?
+    answer: ""
+authentication:
+  name: ""
+  questions: []
+secretmanagement:
+  name: Secret Management
+  questions:
+  - question: What means are used to pass secrets or credentials to the component's
+      configuration ?
+    answer: ""
+logging:
+  name: Logging / Audit
+  questions:
+  - question: Are all the actions performed by the component audited with enough information
+      to uniquely identify when, who and what action was performed ?
+    answer: ""
+  - question: Is all the sensitive information masked or hashed in the logs ?
+    answer: ""
+podsecurity:
+  name: Pod Security Profile
+  questions:
+  - question: Does the namespace where the component is implemented have a runlevel
+      assigned to it?
+    answer: ""
+  - question: 'Do the pods that are part of the component have their security context
+      restricted with the "restricted-v2" SCC? '
+    answer: "false"
+    hint: Answer No → Go to Security Context Section
+  - question: Does the component specify a SecComp profile ?
+    answer: ""
+  - question: Does the component specify custom SeLinux options
+    answer: '&SELinuxOptions{User:,Role:,Type:,Level:s0:c17,c4,}'
+securitycontext:
+  name: Security Context
+  questions:
+  - question: Does the component share any of the following host's namespaces ?
+    answer: hostIPC false, hostNetwork false, hostPID false
+  - question: Does the component enable privilege escalation by setting a "true" allowPrivilegeEscalation
+      ?
+    answer: "false"
+  - question: Do all containers run as non-root by enabling runAsNonRoot ?
+    answer: "true"
+  - question: Do all containers run as non-privileged users ?
+    answer: 'runAsUser 499 '
+  - question: 'Does the component add additional Linux kernel capabilities to the
+      default ones ? '
+    answer: "no"
+  - question: 'Does the component unmask the /proc filesystem ? '
+    answer: <nil>
+volumes:
+  name: Volumes
+  questions:
+  - question: Does the component mount, either read or read/write, any of the following
+      "sensitive" hostPaths ?
+    answer: /etc/secrets, /apiserver.local.config/certificates
+denialofservice:
+  name: ""
+  questions: []
+networkpolicies:
+  name: ""
+  questions: []

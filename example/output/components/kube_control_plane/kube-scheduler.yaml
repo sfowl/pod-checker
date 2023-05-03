@@ -1,0 +1,30 @@
+name: kube-scheduler
+namespace: kube-scheduler
+group: kube control plane
+deployedAs: StaticPods
+runsOn: master nodes
+IsOperator: false
+securityContext:
+  runAsNonRoot: false
+  runAsGroup: null
+  runAsUser: null
+  sysctls: []
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: ""
+runLevel: "0"
+hostPIC: false
+hostNetwork: true
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+- auth/authentication-operator/Deployment/authentication-operator
+outgoingConnections:
+- networking/ingress/Deployment/router-default
+- auth/authentication-operator/Deployment/authentication-operator
+hostMounts:
+- /etc/kubernetes/static-pod-resources
+- /etc/kubernetes/static-pod-certs

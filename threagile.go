@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 	"time"
 
@@ -70,9 +69,6 @@ func genThreagile(components map[string]Component) tm.ModelInput {
 			comms[targetID] = l
 		}
 		ta.Communication_links = comms
-		fmt.Println("--coms---")
-		fmt.Println(len(comms))
-		fmt.Println("--coms---")
 
 		tags := make([]string, 0)
 		if c.SCC == "privileged" {
@@ -86,9 +82,6 @@ func genThreagile(components map[string]Component) tm.ModelInput {
 		technicalAssets[assetID] = ta
 	}
 	report.Technical_assets = technicalAssets
-	fmt.Println("---")
-	fmt.Println(len(report.Technical_assets))
-	fmt.Println("---")
 
 	return report
 }

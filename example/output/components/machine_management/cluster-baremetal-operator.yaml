@@ -1,0 +1,37 @@
+name: cluster-baremetal-operator
+namespace: machine-api
+group: machine management
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 65534
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c22,c4
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - MKNOD
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: anyuid
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections: []
+outgoingConnections: []
+hostMounts:
+- /etc/cluster-baremetal-operator/tls
+- /etc/cluster-baremetal-operator/images
+- /etc/baremetal-kube-rbac-proxy
+- /etc/tls/private

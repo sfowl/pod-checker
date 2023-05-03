@@ -1,0 +1,37 @@
+name: openshift-apiserver-operator
+namespace: apiserver-operator
+group: openshift control plane
+deployedAs: Deployment
+runsOn: master nodes
+IsOperator: true
+securityContext:
+  runAsNonRoot: true
+  runAsGroup: null
+  runAsUser: 65534
+  selinuxOptions:
+    user: ""
+    role: ""
+    type: ""
+    level: s0:c16,c5
+  seccompProfile:
+    type: RuntimeDefault
+    localhostprofile: null
+  sysctls: []
+  capabilities:
+    add: []
+    drop:
+    - ALL
+  privileged: false
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+scc: nonroot-v2
+runLevel: ""
+hostPIC: false
+hostNetwork: false
+hostPID: false
+inboundTraffic: true
+externallyExposed: false
+incomingConnections:
+- kube control plane/kube-apiserver/StaticPods/kube-apiserver
+outgoingConnections: []
+hostMounts: []
