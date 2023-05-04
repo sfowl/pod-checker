@@ -30,6 +30,7 @@ runLevel: ""
 hostIPC: false
 hostNetwork: false
 hostPID: false
+priorityClass: openshift-user-critical
 inboundTraffic: true
 externallyExposed: false
 incomingConnections:

@@ -371,6 +371,8 @@ func main() {
 			c.IsOperator = true
 		}
 
+		c.PriorityClass = p.Spec.PriorityClassName
+
 		if c.SCC == "" && scc != "" {
 			c.SCC = scc
 			c.SecurityContext = securityContext
@@ -507,6 +509,7 @@ func printCSV(components map[string]Component, outputFile string) {
 		"ReadOnlyRootFilesystem",
 		"AllowPrivilegeEscalation",
 		// end SecurityContext section
+		"PriorityClass",
 		"InboundTraffic?",
 		"ExternallyExposed?",
 		"IncomingConnections",

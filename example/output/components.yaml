@@ -27,6 +27,7 @@ auth/authentication-operator/Deployment/authentication-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -58,6 +59,7 @@ auth/authentication/Deployment/oauth-openshift:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: true
   incomingConnections:
@@ -88,6 +90,7 @@ auth/oauth-apiserver/Deployment/apiserver:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -127,6 +130,7 @@ console/console-operator/Deployment/console-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -168,6 +172,7 @@ console/console/Deployment/console:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: true
   incomingConnections:
@@ -211,6 +216,7 @@ console/console/Deployment/downloads:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: true
   incomingConnections:
@@ -238,6 +244,7 @@ kube control plane/etcd-operator/Deployment/etcd-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -265,6 +272,7 @@ kube control plane/etcd/StaticPods/etcd:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -294,6 +302,7 @@ kube control plane/kube-apiserver-operator/Deployment/kube-apiserver-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -332,6 +341,7 @@ kube control plane/kube-apiserver/StaticPods/kube-apiserver:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -402,6 +412,7 @@ kube control plane/kube-controller-manager-operator/Deployment/kube-controller-m
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -428,6 +439,7 @@ kube control plane/kube-controller-manager/StaticPods/kube-controller-manager:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -455,6 +467,7 @@ kube control plane/kube-scheduler-operator/Deployment/openshift-kube-scheduler-o
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -481,6 +494,7 @@ kube control plane/kube-scheduler/StaticPods/kube-scheduler:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -512,6 +526,7 @@ machine management/cluster-machine-approver/Deployment/machine-approver:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -539,6 +554,7 @@ machine management/cluster-node-tuning-operator/DaemonSet/tuned:
   hostIPC: true
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -582,6 +598,7 @@ machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-o
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -624,6 +641,7 @@ machine management/machine-api/Deployment/cluster-autoscaler-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -663,6 +681,7 @@ machine management/machine-api/Deployment/cluster-baremetal-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -705,6 +724,7 @@ machine management/machine-api/Deployment/control-plane-machine-set-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -745,6 +765,7 @@ machine management/machine-api/Deployment/machine-api-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -774,6 +795,7 @@ machine management/machine-config-operator/DaemonSet/machine-config-daemon:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -817,6 +839,7 @@ machine management/machine-config-operator/DaemonSet/machine-config-server:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -857,6 +880,7 @@ machine management/machine-config-operator/Deployment/machine-config-controller:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -894,6 +918,7 @@ machine management/machine-config-operator/Deployment/machine-config-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -922,6 +947,7 @@ networking/dns-operator/Deployment/dns-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -949,6 +975,7 @@ networking/dns/DaemonSet/dns-default:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -984,6 +1011,7 @@ networking/dns/DaemonSet/node-resolver:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1023,6 +1051,7 @@ networking/ingress-canary/DaemonSet/ingress-canary:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: true
   incomingConnections:
@@ -1063,6 +1092,7 @@ networking/ingress-operator/Deployment/ingress-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1106,6 +1136,7 @@ networking/ingress/Deployment/router-default:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1144,6 +1175,7 @@ networking/multus/DaemonSet/multus:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1174,6 +1206,7 @@ networking/multus/DaemonSet/multus-additional-cni-plugins:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1199,6 +1232,7 @@ networking/multus/DaemonSet/network-metrics-daemon:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1226,6 +1260,7 @@ networking/multus/Deployment/multus-admission-controller:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1266,6 +1301,7 @@ networking/network-diagnostics/DaemonSet/network-check-target:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: openshift-user-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1306,6 +1342,7 @@ networking/network-diagnostics/Deployment/network-check-source:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: openshift-user-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1336,6 +1373,7 @@ networking/network-operator/Deployment/network-operator:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1375,6 +1413,7 @@ networking/route-controller-manager/Deployment/route-controller-manager:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1401,6 +1440,7 @@ networking/sdn/DaemonSet/sdn:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -1436,6 +1476,7 @@ networking/sdn/DaemonSet/sdn-controller:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -1475,6 +1516,7 @@ networking/service-ca-operator/Deployment/service-ca-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1514,6 +1556,7 @@ networking/service-ca/Deployment/service-ca:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1552,6 +1595,7 @@ openshift control plane/apiserver-operator/Deployment/openshift-apiserver-operat
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1578,6 +1622,7 @@ openshift control plane/apiserver/Deployment/apiserver:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1605,6 +1650,7 @@ openshift control plane/cloud-controller-manager-operator/Deployment/cluster-clo
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1645,6 +1691,7 @@ openshift control plane/cloud-credential-operator/Deployment/cloud-credential-op
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1685,6 +1732,7 @@ openshift control plane/cluster-version/Deployment/cluster-version-operator:
   hostIPC: false
   hostNetwork: true
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections: []
@@ -1726,6 +1774,7 @@ openshift control plane/config-operator/Deployment/openshift-config-operator:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: false
   externallyExposed: false
   incomingConnections: []
@@ -1763,6 +1812,7 @@ openshift control plane/controller-manager-operator/Deployment/openshift-control
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-cluster-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:
@@ -1802,6 +1852,7 @@ openshift control plane/controller-manager/Deployment/controller-manager:
   hostIPC: false
   hostNetwork: false
   hostPID: false
+  priorityClass: system-node-critical
   inboundTraffic: true
   externallyExposed: false
   incomingConnections:

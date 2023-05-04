@@ -22,6 +22,7 @@ type Component struct {
 	HostIPC             bool             `yaml:"hostIPC"`
 	HostNetwork         bool             `yaml:"hostNetwork"`
 	HostPID             bool             `yaml:"hostPID"`
+	PriorityClass       string           `yaml:"priorityClass"`
 	InboundTraffic      bool             `yaml:"inboundTraffic"`
 	ExternallyExposed   bool             `yaml:"externallyExposed"`
 	IncomingConnections []string         `yaml:"incomingConnections"`
@@ -66,6 +67,7 @@ func (c Component) Values() []string {
 		strconv.FormatBool(c.SecurityContext.Privileged),
 		strconv.FormatBool(c.SecurityContext.ReadOnlyRootFilesystem),
 		strconv.FormatBool(c.SecurityContext.AllowPrivilegeEscalation),
+		c.PriorityClass,
 		strconv.FormatBool(c.InboundTraffic),
 		strconv.FormatBool(c.ExternallyExposed),
 		strings.Join(c.IncomingConnections, ","),

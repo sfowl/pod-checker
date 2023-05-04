@@ -17,6 +17,7 @@ runLevel: "0"
 hostIPC: false
 hostNetwork: true
 hostPID: false
+priorityClass: system-node-critical
 inboundTraffic: false
 externallyExposed: false
 incomingConnections: []
