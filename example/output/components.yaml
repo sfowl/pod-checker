@@ -24,7 +24,7 @@ auth/authentication-operator/Deployment/authentication-operator:
     allowPrivilegeEscalation: false
   scc: anyuid
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -55,7 +55,7 @@ auth/authentication/Deployment/oauth-openshift:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -85,7 +85,7 @@ auth/oauth-apiserver/Deployment/apiserver:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -124,7 +124,7 @@ console/console-operator/Deployment/console-operator:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -165,7 +165,7 @@ console/console/Deployment/console:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -208,7 +208,7 @@ console/console/Deployment/downloads:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -235,7 +235,7 @@ kube control plane/etcd-operator/Deployment/etcd-operator:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -262,7 +262,7 @@ kube control plane/etcd/StaticPods/etcd:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -291,7 +291,7 @@ kube control plane/kube-apiserver-operator/Deployment/kube-apiserver-operator:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -329,7 +329,7 @@ kube control plane/kube-apiserver/StaticPods/kube-apiserver:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -399,7 +399,7 @@ kube control plane/kube-controller-manager-operator/Deployment/kube-controller-m
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -425,7 +425,7 @@ kube control plane/kube-controller-manager/StaticPods/kube-controller-manager:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -452,7 +452,7 @@ kube control plane/kube-scheduler-operator/Deployment/openshift-kube-scheduler-o
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -478,7 +478,7 @@ kube control plane/kube-scheduler/StaticPods/kube-scheduler:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -509,7 +509,7 @@ machine management/cluster-machine-approver/Deployment/machine-approver:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -536,7 +536,7 @@ machine management/cluster-node-tuning-operator/DaemonSet/tuned:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: ""
-  hostPIC: true
+  hostIPC: true
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -579,7 +579,7 @@ machine management/cluster-node-tuning-operator/Deployment/cluster-node-tuning-o
     allowPrivilegeEscalation: false
   scc: anyuid
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -621,7 +621,7 @@ machine management/machine-api/Deployment/cluster-autoscaler-operator:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -660,7 +660,7 @@ machine management/machine-api/Deployment/cluster-baremetal-operator:
     allowPrivilegeEscalation: false
   scc: anyuid
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -702,7 +702,7 @@ machine management/machine-api/Deployment/control-plane-machine-set-operator:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -742,7 +742,7 @@ machine management/machine-api/Deployment/machine-api-operator:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -771,7 +771,7 @@ machine management/machine-config-operator/DaemonSet/machine-config-daemon:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -814,7 +814,7 @@ machine management/machine-config-operator/DaemonSet/machine-config-server:
     allowPrivilegeEscalation: false
   scc: hostnetwork
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -854,7 +854,7 @@ machine management/machine-config-operator/Deployment/machine-config-controller:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -891,7 +891,7 @@ machine management/machine-config-operator/Deployment/machine-config-operator:
     allowPrivilegeEscalation: false
   scc: hostmount-anyuid
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -919,7 +919,7 @@ networking/dns-operator/Deployment/dns-operator:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -946,7 +946,7 @@ networking/dns/DaemonSet/dns-default:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -981,7 +981,7 @@ networking/dns/DaemonSet/node-resolver:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -1020,7 +1020,7 @@ networking/ingress-canary/DaemonSet/ingress-canary:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1060,7 +1060,7 @@ networking/ingress-operator/Deployment/ingress-operator:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1103,7 +1103,7 @@ networking/ingress/Deployment/router-default:
     allowPrivilegeEscalation: true
   scc: hostnetwork
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -1141,7 +1141,7 @@ networking/multus/DaemonSet/multus:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -1171,7 +1171,7 @@ networking/multus/DaemonSet/multus-additional-cni-plugins:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -1196,7 +1196,7 @@ networking/multus/DaemonSet/network-metrics-daemon:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1223,7 +1223,7 @@ networking/multus/Deployment/multus-admission-controller:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1263,7 +1263,7 @@ networking/network-diagnostics/DaemonSet/network-check-target:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1303,7 +1303,7 @@ networking/network-diagnostics/Deployment/network-check-source:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1333,7 +1333,7 @@ networking/network-operator/Deployment/network-operator:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -1372,7 +1372,7 @@ networking/route-controller-manager/Deployment/route-controller-manager:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1398,7 +1398,7 @@ networking/sdn/DaemonSet/sdn:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -1433,7 +1433,7 @@ networking/sdn/DaemonSet/sdn-controller:
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -1472,7 +1472,7 @@ networking/service-ca-operator/Deployment/service-ca-operator:
     allowPrivilegeEscalation: false
   scc: nonroot-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1511,7 +1511,7 @@ networking/service-ca/Deployment/service-ca:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1549,7 +1549,7 @@ openshift control plane/apiserver-operator/Deployment/openshift-apiserver-operat
     allowPrivilegeEscalation: false
   scc: nonroot-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1575,7 +1575,7 @@ openshift control plane/apiserver/Deployment/apiserver:
     allowPrivilegeEscalation: false
   scc: privileged
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1602,7 +1602,7 @@ openshift control plane/cloud-controller-manager-operator/Deployment/cluster-clo
     allowPrivilegeEscalation: false
   scc: ""
   runLevel: "0"
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: false
@@ -1642,7 +1642,7 @@ openshift control plane/cloud-credential-operator/Deployment/cloud-credential-op
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1682,7 +1682,7 @@ openshift control plane/cluster-version/Deployment/cluster-version-operator:
     allowPrivilegeEscalation: false
   scc: hostaccess
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: true
   hostPID: false
   inboundTraffic: true
@@ -1723,7 +1723,7 @@ openshift control plane/config-operator/Deployment/openshift-config-operator:
     allowPrivilegeEscalation: false
   scc: nonroot-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: false
@@ -1760,7 +1760,7 @@ openshift control plane/controller-manager-operator/Deployment/openshift-control
     allowPrivilegeEscalation: false
   scc: nonroot-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true
@@ -1799,7 +1799,7 @@ openshift control plane/controller-manager/Deployment/controller-manager:
     allowPrivilegeEscalation: false
   scc: restricted-v2
   runLevel: ""
-  hostPIC: false
+  hostIPC: false
   hostNetwork: false
   hostPID: false
   inboundTraffic: true

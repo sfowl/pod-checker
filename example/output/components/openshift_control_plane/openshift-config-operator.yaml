@@ -26,7 +26,7 @@ securityContext:
   allowPrivilegeEscalation: false
 scc: nonroot-v2
 runLevel: ""
-hostPIC: false
+hostIPC: false
 hostNetwork: false
 hostPID: false
 inboundTraffic: false

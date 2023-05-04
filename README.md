@@ -14,8 +14,10 @@ $ go run . -network-csv ./example/input/network-traffic.csv -exclude observabili
 
 A network-traffic.csv file is a CSV of network traffic data, exported by the [network observability operator](https://docs.openshift.com/container-platform/4.12/networking/network_observability/network-observability-overview.html). Network traffic data like this is necessary to create the links between components in the final report data.
 
-This will:
-* print detailed component data in csv form to stdout
+This will create:
+* `components.tsv` a tab-separated spreadsheet of component info
+* `components.yaml` a yaml file of component info
+* `components/` a directory of yaml files with component info
 * create a threatdragon file `output.json`, which can be imported in a [Threat Dragon](https://github.com/OWASP/threat-dragon) instance.
 
 ### Threagile

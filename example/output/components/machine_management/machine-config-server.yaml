@@ -29,7 +29,7 @@ securityContext:
   allowPrivilegeEscalation: false
 scc: hostnetwork
 runLevel: ""
-hostPIC: false
+hostIPC: false
 hostNetwork: true
 hostPID: false
 inboundTraffic: false

@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"os"
 	"sort"
-	"strconv"
 	"strings"
 
 	routev1 "github.com/openshift/api/route/v1"
@@ -46,29 +45,6 @@ type ClusterData struct {
 	Routes              []routev1.Route
 }
 
-type Component struct {
-	Name                string
-	Namespace           string
-	Group               string
-	DeployedAs          string                   `yaml:"deployedAs"`
-	RunsOn              string                   `yaml:"runsOn"`
-	IsOperator          bool                     `yaml:"IsOperator"`
-	SecurityContext     ComponentSecurityContext `yaml:"securityContext"`
-	SCC                 string
-	RunLevel            string           `yaml:"runLevel"`
-	HostIPC             bool             `yaml:"hostPIC"`
-	HostNetwork         bool             `yaml:"hostNetwork"`
-	HostPID             bool             `yaml:"hostPID"`
-	InboundTraffic      bool             `yaml:"inboundTraffic"`
-	ExternallyExposed   bool             `yaml:"externallyExposed"`
-	IncomingConnections []string         `yaml:"incomingConnections"`
-	OutgoingConnections []string         `yaml:"outgoingConnections"`
-	HostMounts          []string         `yaml:"hostMounts"`
-	Pods                []corev1.Pod     `yaml:"-"`
-	Services            []corev1.Service `yaml:"-"`
-	Routes              []routev1.Route  `yaml:"-"`
-}
-
 // XXX this is super inefficient, lazy. Maybe should invert the map.
 func getGroup(namespace string) string {
 	for g, namespaces := range categorizedNamespaces {
@@ -84,28 +60,6 @@ func getGroup(namespace string) string {
 func printValues(writer *csv.Writer, values []string) {
 	if err := writer.Write(values); err != nil {
 		log.Fatalln("error writing output", err)
-	}
-}
-
-func (c Component) Key() string {
-	return strings.Join([]string{c.Group, c.Namespace, c.DeployedAs, c.Name}, "/")
-}
-
-func (c Component) Values() []string {
-	return []string{
-		c.Group,
-		c.Namespace,
-		c.Name,
-		c.DeployedAs,
-		c.RunsOn,
-		c.SCC,
-		c.RunLevel,
-		strconv.FormatBool(c.HostNetwork),
-		strconv.FormatBool(c.InboundTraffic),
-		strconv.FormatBool(c.ExternallyExposed),
-		strings.Join(c.HostMounts, ","),
-		strings.Join(c.IncomingConnections, ","),
-		strings.Join(c.OutgoingConnections, ","),
 	}
 }
 
@@ -454,7 +408,7 @@ func main() {
 
 	// components := filterComponents(components, excludedGroups)
 
-	// printCSV(components)
+	printCSV(components, "example/output/components.tsv")
 	// fmt.Printf("\nThere are %d pods\n", numPods)
 
 	threagileReport := genThreagile(components)
@@ -512,8 +466,15 @@ func marshalYAML(in interface{}) []byte {
 	return yamlData
 }
 
-func printCSV(components map[string]Component) {
-	writer := csv.NewWriter(os.Stdout)
+func printCSV(components map[string]Component, outputFile string) {
+	f, err := os.Create(outputFile)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer f.Close()
+
+	writer := csv.NewWriter(f)
 	writer.Comma = '\t'
 
 	keys := make([]string, 0, len(components))
@@ -523,7 +484,35 @@ func printCSV(components map[string]Component) {
 	sort.Strings(keys)
 
 	var c Component
-	printValues(writer, []string{"Group", "Namespace", "Name", "DeployedAs", "RunsOn", "SecurityContext", "RunLevel", "HostNetwork", "InboundTraffic?", "ExternallyExposed?", "HostMounts", "IncomingConnections", "OutgoingConnections"})
+	printValues(writer, []string{
+		"Group",
+		"Namespace",
+		"Name",
+		"DeployedAs",
+		"RunsOn",
+		"IsOperator",
+		"Default SCC",
+		"RunLevel",
+		"HostIPC",
+		"HostNetwork",
+		"HostPID",
+		// SecurityContext section
+		"RunAsNonRoot",
+		"RunAsGroup",
+		"RunAsUser",
+		"SELinuxOptions",
+		"SeccompProfile",
+		"Capabilities",
+		"Privileged",
+		"ReadOnlyRootFilesystem",
+		"AllowPrivilegeEscalation",
+		// end SecurityContext section
+		"InboundTraffic?",
+		"ExternallyExposed?",
+		"IncomingConnections",
+		"OutgoingConnections",
+		"HostMounts",
+	})
 	for _, k := range keys {
 		c = components[k]
 		printValues(writer, c.Values())

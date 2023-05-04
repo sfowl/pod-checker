@@ -23,7 +23,7 @@ securityContext:
   allowPrivilegeEscalation: false
 scc: anyuid
 runLevel: ""
-hostPIC: false
+hostIPC: false
 hostNetwork: false
 hostPID: false
 inboundTraffic: true

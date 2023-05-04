@@ -23,7 +23,7 @@ securityContext:
   allowPrivilegeEscalation: false
 scc: hostmount-anyuid
 runLevel: ""
-hostPIC: false
+hostIPC: false
 hostNetwork: false
 hostPID: false
 inboundTraffic: true

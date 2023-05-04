@@ -27,7 +27,7 @@ securityContext:
   allowPrivilegeEscalation: false
 scc: restricted-v2
 runLevel: ""
-hostPIC: false
+hostIPC: false
 hostNetwork: false
 hostPID: false
 inboundTraffic: true
