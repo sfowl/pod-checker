@@ -12,6 +12,7 @@ import (
 
 	routev1 "github.com/openshift/api/route/v1"
 	routeclientv1 "github.com/openshift/client-go/route/clientset/versioned/typed/route/v1"
+	"github.com/sfowl/pod-checker/pkg/sslchecker"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/exp/slices"
 	"gopkg.in/yaml.v2"
@@ -287,6 +288,7 @@ func main() {
 
 	networkCSV := flag.String("network-csv", "", "Path to the CSV file")
 	exclude := flag.String("exclude", "", "list of groups to exclude (comma separated)")
+	checkSsl := flag.Bool("check-ssl", false, "Enable SSL verification for each of the services mapped to the pods")
 	flag.Parse()
 
 	// if *networkCSV == "" {
@@ -364,6 +366,9 @@ func main() {
 		podServices := getServices(p, clusterData.ServicesByNamespace)
 		for _, s := range podServices {
 			serviceToComponent[fmt.Sprintf("%s/%s/Service/%s", group, namespace, s.Name)] = componentKey
+			if *checkSsl {
+				sslchecker.SslCheckerForServices(p.GetNamespace(), s.Name, s.Spec.Ports)
+			}
 		}
 
 		c.RunsOn = runsOn
