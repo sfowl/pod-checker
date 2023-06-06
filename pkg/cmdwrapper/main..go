@@ -87,7 +87,8 @@ func (c *CmdWrapper) out(r io.Reader, logError bool) error {
 	}
 
 	if err := in.Err(); err != nil {
-		log.Errorf("%s", err)
+		log.Error(err)
+		return err
 	}
 	return nil
 }
