@@ -1,5 +1,6 @@
 example/output/threagile
 example/output/ssl_reports
 example/output/rbac_reports
+example/output/sa_tokens_reports
 *.pdf
 *.xlsx

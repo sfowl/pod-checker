@@ -136,7 +136,7 @@ func (c *CmdWrapper) Wait() error {
 }
 
 func (c *CmdWrapper) StdOutToFile(file string) {
-	if !h.CheckFileExist(file, fmt.Sprintf("RBAC report file %s exists, it will not be overwritten. If you want to regenerate it, delete the old report", file)) {
+	if !h.CheckFileExist(file, fmt.Sprintf("File %s exists, it will not be overwritten. If you want to regenerate it, delete the old report", file)) {
 		c.logFile = file
 	}
 }
