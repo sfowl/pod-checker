@@ -3,6 +3,7 @@ package cmdwrapper
 import (
 	"bufio"
 	"io"
+	"os"
 	"os/exec"
 
 	log "github.com/sirupsen/logrus"
@@ -13,6 +14,7 @@ type CmdWrapper struct {
 	args   []string
 	cmd    *exec.Cmd
 	stdout io.ReadCloser
+	stderr io.ReadCloser
 }
 
 func NewCmdWrapper(app string, args []string) CmdWrapper {
@@ -34,6 +36,14 @@ func (c *CmdWrapper) Start() error {
 
 	c.stdout = out
 
+	out, err = cmd.StderrPipe()
+
+	if err != nil {
+		return err
+	}
+
+	c.stderr = out
+
 	if err := cmd.Start(); err != nil {
 		return err
 	}
@@ -46,11 +56,16 @@ func (c *CmdWrapper) Start() error {
 }
 
 func (c *CmdWrapper) Kill() error {
-	err := c.cmd.Process.Kill()
 
-	if err != nil {
+	if _, err := os.FindProcess(c.cmd.Process.Pid); err != nil {
+		log.Errorf("Failed to find process: %s\n", err)
 		return err
 	}
+
+	if err := c.cmd.Process.Kill(); err != nil {
+		return err
+	}
+
 	log.Debugf("Process killed with PID: %d", c.Pid())
 
 	return nil
@@ -60,17 +75,29 @@ func (c *CmdWrapper) Pid() int {
 	return c.cmd.Process.Pid
 }
 
-func (c *CmdWrapper) StdOut() error {
-	in := bufio.NewScanner(c.stdout)
+func (c *CmdWrapper) out(r io.Reader, logError bool) error {
+	in := bufio.NewScanner(r)
 
 	for in.Scan() {
-		log.Debug(in.Text())
+		if logError {
+			log.Error(in.Text())
+		} else {
+			log.Info(in.Text())
+		}
 	}
 
 	if err := in.Err(); err != nil {
-		log.Errorf("error: %s", err)
+		log.Errorf("%s", err)
 	}
 	return nil
+}
+
+func (c *CmdWrapper) StdOut() error {
+	return c.out(c.stdout, false)
+}
+
+func (c *CmdWrapper) StdErr() error {
+	return c.out(c.stderr, true)
 }
 
 func (c *CmdWrapper) Wait() error {
