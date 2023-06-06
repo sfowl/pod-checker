@@ -34,7 +34,7 @@ func (c *SAChecker) runRBACTool() {
 		"rbac-tool",
 		"policy-rules",
 		"--output", "json",
-		"-e", fmt.Sprintf("^system:serviceaccounts:%s$", c.serviceAccountName),
+		"-e", fmt.Sprintf("^(system:serviceaccounts:%s|system:serviceaccount:%s)$", c.namespace, c.serviceAccountName),
 	}
 
 	log.Infof("Starting rbac-tool for service account %s in namespace: %s", c.serviceAccountName, c.namespace)
