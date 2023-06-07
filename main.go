@@ -12,6 +12,8 @@ import (
 
 	routev1 "github.com/openshift/api/route/v1"
 	routeclientv1 "github.com/openshift/client-go/route/clientset/versioned/typed/route/v1"
+	"github.com/sfowl/pod-checker/pkg/helpers"
+	"github.com/sfowl/pod-checker/pkg/sslchecker"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/exp/slices"
 	"gopkg.in/yaml.v2"
@@ -287,6 +289,7 @@ func main() {
 
 	networkCSV := flag.String("network-csv", "", "Path to the CSV file")
 	exclude := flag.String("exclude", "", "list of groups to exclude (comma separated)")
+	checkSsl := flag.Bool("check-ssl", false, "Enable SSL verification for each of the services mapped to the pods")
 	flag.Parse()
 
 	// if *networkCSV == "" {
@@ -364,6 +367,9 @@ func main() {
 		podServices := getServices(p, clusterData.ServicesByNamespace)
 		for _, s := range podServices {
 			serviceToComponent[fmt.Sprintf("%s/%s/Service/%s", group, namespace, s.Name)] = componentKey
+			if *checkSsl {
+				sslchecker.SslCheckerForServices(p.GetNamespace(), s.Name, s.Spec.Ports, group)
+			}
 		}
 
 		c.RunsOn = runsOn
@@ -437,7 +443,7 @@ func main() {
 func writeComponents(components map[string]Component, outputDir string) {
 	for _, c := range components {
 		componentYAML := marshalYAML(c)
-		dir := fmt.Sprintf("%s/%s", outputDir, strings.ReplaceAll(c.Group, " ", "_"))
+		dir := fmt.Sprintf("%s/%s", outputDir, helpers.CanonicalGroup(c.Group))
 		os.MkdirAll(dir, 0755)
 		writeYAML(componentYAML, fmt.Sprintf("%s/%s.yaml", dir, c.Name))
 	}
@@ -447,7 +453,7 @@ func writeSurvey(components map[string]Component, outputDir string) {
 	for k, c := range components {
 		survey := genSurvey(map[string]Component{k: c})
 		surveyYAML := marshalYAML(survey[0])
-		dir := fmt.Sprintf("%s/%s", outputDir, strings.ReplaceAll(c.Group, " ", "_"))
+		dir := fmt.Sprintf("%s/%s", outputDir, helpers.CanonicalGroup(c.Group))
 		os.MkdirAll(dir, 0755)
 		writeYAML(surveyYAML, fmt.Sprintf("%s/%s.yaml", dir, c.Name))
 	}
