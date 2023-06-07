@@ -74,8 +74,8 @@ func (c *SslChecker) Run() {
 	svc := fmt.Sprintf("%s:%d", c.fqdnSvc(), c.port)
 
 	hostReportFile := c.reportFile(c.hostReportDir)
-	if _, err := os.Stat(hostReportFile); err == nil {
-		log.Infof("Report file %s exists, it will not be overwritten. If you want to regenerate it, delete the old report", hostReportFile)
+
+	if h.CheckFileExist(hostReportFile, fmt.Sprintf("Report file %s exists, it will not be overwritten. If you want to regenerate it, delete the old report", hostReportFile)) {
 		return
 	}
 

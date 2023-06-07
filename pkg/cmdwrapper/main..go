@@ -2,19 +2,22 @@ package cmdwrapper
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
 
+	h "github.com/sfowl/pod-checker/pkg/helpers"
 	log "github.com/sirupsen/logrus"
 )
 
 type CmdWrapper struct {
-	app    string
-	args   []string
-	cmd    *exec.Cmd
-	stdout io.ReadCloser
-	stderr io.ReadCloser
+	app     string
+	args    []string
+	cmd     *exec.Cmd
+	stdout  io.ReadCloser
+	stderr  io.ReadCloser
+	logFile string
 }
 
 func NewCmdWrapper(app string, args []string) CmdWrapper {
@@ -78,12 +81,36 @@ func (c *CmdWrapper) Pid() int {
 func (c *CmdWrapper) out(r io.Reader, logError bool) error {
 	in := bufio.NewScanner(r)
 
-	for in.Scan() {
-		if logError {
-			log.Error(in.Text())
-		} else {
-			log.Info(in.Text())
+	// Increase scanner buffer, rbac-tool returns pretty long data
+	buf := make([]byte, 0, 64*1024)
+	in.Buffer(buf, 1024*1024)
+
+	var f *os.File
+	var err error
+
+	if c.logFile != "" {
+		f, err = os.OpenFile(c.logFile, os.O_CREATE|os.O_WRONLY, 0600)
+		if err != nil {
+			log.Fatal(err)
 		}
+
+		defer f.Close()
+	}
+
+	for in.Scan() {
+		s := in.Text()
+		if logError {
+			log.Error(s)
+		} else {
+			log.Info(s)
+		}
+
+		if c.logFile != "" {
+			if _, err := f.WriteString(s); err != nil {
+				log.Errorln(err)
+			}
+		}
+
 	}
 
 	if err := in.Err(); err != nil {
@@ -106,4 +133,10 @@ func (c *CmdWrapper) Wait() error {
 		return err
 	}
 	return nil
+}
+
+func (c *CmdWrapper) StdOutToFile(file string) {
+	if !h.CheckFileExist(file, fmt.Sprintf("File %s exists, it will not be overwritten. If you want to regenerate it, delete the old report", file)) {
+		c.logFile = file
+	}
 }
