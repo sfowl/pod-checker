@@ -306,8 +306,13 @@ func main() {
 	serviceToComponent := make(map[string]string)
 	components := make(map[string]Component)
 	for _, p := range clusterData.Pods {
-		if appLabel, ok := p.Labels["app"]; ok && appLabel == "guard" {
-			// guard pods have no owners, not interested in these
+		if appLabel, ok := p.Labels["app"]; ok && (appLabel == "guard" || appLabel == "must-gather") {
+			// guard and must-gather pods have no owners, not interested in these
+			continue
+		}
+
+		if _, ok := p.Annotations["debug.openshift.io/source-container"]; ok {
+			// debug pods have no owners, not interested in these
 			continue
 		}
 

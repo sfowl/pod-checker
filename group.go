@@ -59,6 +59,7 @@ func init() {
 			"sdn",
 			"service-ca-operator",
 			"service-ca",
+			"ovn-kubernetes",
 		},
 		"observability": {
 			"monitoring",
